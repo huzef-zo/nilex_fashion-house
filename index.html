@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NILEX Men's Fashionhouse | Flow like the nile</title>
+    <meta name="description" content="NILEX Fashionhouse - Premium Men's Clothing Store in Bishoftu, Ethiopia. Featuring modern streetwear, flowing pure linens, casual jackets, and men's accessories with 3D interactive lookbook.">
+    <meta name="keywords" content="NILEX, Nilex fashion, Flow like the nile, Bishoftu mens fashion, Ethiopian mens clothing, streetwear, hoodies, linen shirts, 3D fashion viewer">
+    
+    <!-- Open Graph / Social Meta -->
+    <meta property="og:title" content="NILEX Men's Fashionhouse | Flow like the nile">
+    <meta property="og:description" content="Discover premium men's collections, pure linens, heavyweight hoodies, and modern streetwear in Bishoftu with 3D interactive viewing.">
+    <meta property="og:image" content="assets/images/logo.jpg">
+    <meta property="og:type" content="website">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/jpeg" href="assets/images/logo.jpg">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- CSS Stylesheets -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/3d-viewer.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+    <!-- Background Nile River Flow Canvas Animation -->
+    <canvas id="river-canvas"></canvas>
+
+    <!-- ====================================================================
+         SITE HEADER & NAVIGATION
+         ==================================================================== -->
+    <header class="site-header">
+        <div class="nav-container">
+            <!-- Brand Logo -->
+            <a href="#" class="brand-logo" aria-label="NILEX Homepage">
+                <div class="logo-badge">
+                    <img src="assets/images/logo.jpg" alt="NILEX Logo" onerror="this.style.display='none'">
+                </div>
+                <div class="brand-meta">
+                    <span class="brand-title">NILEX</span>
+                    <span class="brand-tagline-mini">Flow like the nile</span>
+                </div>
+            </a>
+
+            <!-- Desktop Nav Links -->
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="#collections" class="nav-link">Men's Collections</a></li>
+                    <li><a href="#philosophy" class="nav-link">The Spirit</a></li>
+                    <li><a href="#location" class="nav-link">Boutique & Map</a></li>
+                    <li><a href="#order" class="nav-link">How to Order</a></li>
+                    <li><a href="#tiktok" class="nav-link">TikTok</a></li>
+                </ul>
+            </nav>
+
+            <!-- Quick Action & Mobile Toggle -->
+            <div class="nav-actions">
+                <a href="https://t.me/ezana62" target="_blank" rel="noopener noreferrer" class="btn-nav-telegram" data-brand="telegram-link">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.19-.08-.05-.19-.02-.27 0-.12.03-1.99 1.27-5.62 3.72-.53.36-1.01.54-1.44.53-.47-.01-1.38-.27-2.06-.49-.83-.27-1.49-.42-1.43-.88.03-.24.38-.49 1.03-.75 4.04-1.76 6.74-2.92 8.09-3.49 3.85-1.6 4.65-1.88 5.17-1.89.11 0 .37.03.54.17.14.12.18.28.2.45-.02.07-.02.21-.04.34z"/>
+                    </svg>
+                    <span>Order: @ezana62</span>
+                </a>
+
+                <button class="mobile-toggle" aria-label="Toggle Navigation Menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ====================================================================
+         HERO SECTION
+         ==================================================================== -->
+    <section class="hero-section" id="hero">
+        <div class="hero-glow-orb"></div>
+        <div class="hero-content">
+            <!-- Brand Badge -->
+            <div class="hero-brand-emblem reveal-on-scroll">
+                <div class="pulse-dot"></div>
+                <span>Men's Exclusive Fashion • Bishoftu</span>
+            </div>
+
+            <!-- Main Title & Tagline -->
+            <h1 class="hero-title reveal-on-scroll delay-1">
+                Flow Like The <span class="text-gold-gradient">Nile</span>
+            </h1>
+            <p class="hero-subtitle reveal-on-scroll delay-2">
+                "Modern Menswear Crafted For Distinct Presence & Effortless Fluidity."
+            </p>
+            <p class="hero-description reveal-on-scroll delay-3">
+                Welcome to <strong>NILEX Fashionhouse</strong>. Explore our curated showcase of men's urban streetwear, breezy natural linen resort coordinates, heavyweight hoodies, and artisanal accessories.
+            </p>
+
+            <!-- Call to Actions -->
+            <div class="hero-actions reveal-on-scroll delay-4">
+                <a href="#collections" class="btn-primary">
+                    <span>Explore Men's Lookbook</span>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <polyline points="19 12 12 19 5 12"></polyline>
+                    </svg>
+                </a>
+                <a href="#location" class="btn-secondary">
+                    <span>Visit Bishoftu Boutique</span>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                        <circle cx="12" cy="10" r="3"></circle>
+                    </svg>
+                </a>
+            </div>
+
+            <!-- Hero Quick Info Pills -->
+            <div class="hero-quick-badges reveal-on-scroll delay-5">
+                <!-- Location Pill -->
+                <a href="https://maps.app.goo.gl/r3yCgR7Ek4SWK1767?g_st=atm" target="_blank" rel="noopener noreferrer" class="info-pill" data-brand="maps-link" title="Open in Google Maps">
+                    <div class="info-pill-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                        </svg>
+                    </div>
+                    <div class="info-pill-text">
+                        <span class="info-pill-label">Boutique Location</span>
+                        <span class="info-pill-value">Bishoftu, Next to Farmi Cafe</span>
+                    </div>
+                </a>
+
+                <!-- Telegram Order Pill -->
+                <a href="https://t.me/ezana62" target="_blank" rel="noopener noreferrer" class="info-pill" data-brand="telegram-link" title="Place order on Telegram">
+                    <div class="info-pill-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.19-.08-.05-.19-.02-.27 0-.12.03-1.99 1.27-5.62 3.72-.53.36-1.01.54-1.44.53-.47-.01-1.38-.27-2.06-.49-.83-.27-1.49-.42-1.43-.88.03-.24.38-.49 1.03-.75 4.04-1.76 6.74-2.92 8.09-3.49 3.85-1.6 4.65-1.88 5.17-1.89.11 0 .37.03.54.17.14.12.18.28.2.45-.02.07-.02.21-.04.34z"/>
+                        </svg>
+                    </div>
+                    <div class="info-pill-text">
+                        <span class="info-pill-label">To Place Your Order</span>
+                        <span class="info-pill-value">@ezana62</span>
+                    </div>
+                </a>
+
+                <!-- Phone Call Pill -->
+                <a href="tel:+251980818485" class="info-pill" data-brand="phone-link" title="Call directly">
+                    <div class="info-pill-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+                        </svg>
+                    </div>
+                    <div class="info-pill-text">
+                        <span class="info-pill-label">Contact Line</span>
+                        <span class="info-pill-value">0980818485</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====================================================================
+         MARQUEE TICKER STRIP
+         ==================================================================== -->
+    <div class="marquee-container" aria-hidden="true">
+        <div class="marquee-track">
+            <div class="marquee-item">
+                <span>NILEX MEN'S FASHIONHOUSE</span>
+                <span class="separator">◆</span>
+                <span>FLOW LIKE THE NILE</span>
+                <span class="separator">◆</span>
+                <span>📍 BISHOFTU • NEXT TO FARMI CAFE</span>
+                <span class="separator">◆</span>
+                <span>CONTACT: 0980818485</span>
+                <span class="separator">◆</span>
+                <span>ORDERS: @EZANA62</span>
+                <span class="separator">◆</span>
+                <span>TIKTOK: @NILEXFASHION1</span>
+                <span class="separator">◆</span>
+                <span>STREETWEAR • PURE LINENS • CASUALS</span>
+                <span class="separator">◆</span>
+            </div>
+            <div class="marquee-item">
+                <span>NILEX MEN'S FASHIONHOUSE</span>
+                <span class="separator">◆</span>
+                <span>FLOW LIKE THE NILE</span>
+                <span class="separator">◆</span>
+                <span>📍 BISHOFTU • NEXT TO FARMI CAFE</span>
+                <span class="separator">◆</span>
+                <span>CONTACT: 0980818485</span>
+                <span class="separator">◆</span>
+                <span>ORDERS: @EZANA62</span>
+                <span class="separator">◆</span>
+                <span>TIKTOK: @NILEXFASHION1</span>
+                <span class="separator">◆</span>
+                <span>STREETWEAR • PURE LINENS • CASUALS</span>
+                <span class="separator">◆</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====================================================================
+         INTERACTIVE SHOWCASE & COLLECTIONS EXPLORER
+         ==================================================================== -->
+    <section class="showcase-section" id="collections">
+        <div class="container">
+            <!-- Section Header -->
+            <div class="section-header reveal-on-scroll">
+                <span class="section-eyebrow">Men's Showcase</span>
+                <h2 class="section-title">Explore The Collections</h2>
+                <p class="section-desc">
+                    Click any collection to view sub-categories and open high-resolution, 3D rotatable and zoomable garment views.
+                </p>
+            </div>
+
+            <!-- Dynamic Breadcrumb & Search Controls Bar -->
+            <div class="showcase-nav-bar reveal-on-scroll delay-1">
+                <!-- Breadcrumb Path -->
+                <div class="breadcrumb-trail" id="breadcrumb-trail">
+                    <!-- Populated dynamically by app.js -->
+                </div>
+
+                <!-- Search Input -->
+                <div class="showcase-controls">
+                    <div class="search-wrapper">
+                        <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        </svg>
+                        <input type="text" id="collection-search-input" class="search-input" placeholder="Search hoodies, tees, linen, cargo...">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dynamic Multi-Level Showcase Viewport (Collections -> Subcollections -> Products) -->
+            <div id="showcase-dynamic-container" class="showcase-view-container reveal-on-scroll delay-2">
+                <!-- Populated dynamically by app.js -->
+            </div>
+        </div>
+    </section>
+
+    <!-- ====================================================================
+         BRAND PHILOSOPHY & CRAFTSMANSHIP EDITORIAL
+         ==================================================================== -->
+    <section class="philosophy-section" id="philosophy">
+        <div class="container">
+            <div class="philosophy-grid">
+                <!-- Media Column -->
+                <div class="philosophy-media reveal-on-scroll">
+                    <img src="https://images.unsplash.com/photo-1552374196-1ab2a1c593e8?auto=format&fit=crop&w=1200&q=80" alt="Nilex Men's Fashion" class="philosophy-img-main" loading="lazy">
+                    <div class="philosophy-card-floating">
+                        <p class="tagline-quote">"Effortless flow, sharp presence, and unrestricted comfort."</p>
+                        <span class="tagline-author">— NILEX MEN</span>
+                    </div>
+                </div>
+
+                <!-- Content Column -->
+                <div class="philosophy-content reveal-on-scroll delay-2">
+                    <span class="section-eyebrow">The Spirit of the Nile</span>
+                    <h2 class="section-title">Built for Flow, Designed for Presence</h2>
+                    <p class="section-desc">
+                        NILEX creates contemporary menswear engineered with premium heavyweight cottons, breathable organic linens, and versatile cuts that move naturally with your lifestyle.
+                    </p>
+
+                    <div class="philosophy-pillars">
+                        <div class="pillar-item">
+                            <h3 class="pillar-title">Modern Silhouettes</h3>
+                            <p class="pillar-desc">Oversized drops, boxy heavyweight hoodies, and relaxed flow fits.</p>
+                        </div>
+                        <div class="pillar-item">
+                            <h3 class="pillar-title">Pure Natural Fibers</h3>
+                            <p class="pillar-desc">Breathable linens and 500GSM compact French Terry cottons.</p>
+                        </div>
+                        <div class="pillar-item">
+                            <h3 class="pillar-title">Bishoftu Atelier</h3>
+                            <p class="pillar-desc">Located next to Farmi Cafe in Bishoftu, serving style lovers everywhere.</p>
+                        </div>
+                        <div class="pillar-item">
+                            <h3 class="pillar-title">Instant Inquiries</h3>
+                            <p class="pillar-desc">Inquire directly on Telegram @ezana62 or call our team at 0980818485.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====================================================================
+         BOUTIQUE LOCATION & GOOGLE MAPS CARD
+         ==================================================================== -->
+    <section class="location-section" id="location">
+        <div class="container">
+            <div class="section-header reveal-on-scroll">
+                <span class="section-eyebrow">Physical Store</span>
+                <h2 class="section-title">Visit Our Boutique</h2>
+                <p class="section-desc">Experience our fabrics, fits, and new drops in person in Bishoftu.</p>
+            </div>
+
+            <div class="location-card-container reveal-on-scroll delay-1">
+                <!-- Details Column -->
+                <div class="location-details-col">
+                    <span class="location-tag">📍 Bishoftu Landmark</span>
+                    <h3 class="location-title">NILEX Fashionhouse</h3>
+                    
+                    <div class="location-address-box">
+                        <svg class="address-pin-icon" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                        </svg>
+                        <div class="address-text">
+                            <h4>Next to Farmi Cafe</h4>
+                            <p>Bishoftu (Debre Zeyit), Oromia, Ethiopia</p>
+                        </div>
+                    </div>
+
+                    <div class="location-hours-box">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <polyline points="12 6 12 12 16 14"></polyline>
+                        </svg>
+                        <span>Open Daily: 9:00 AM – 8:30 PM</span>
+                    </div>
+
+                    <div class="location-actions-row">
+                        <a href="https://maps.app.goo.gl/r3yCgR7Ek4SWK1767?g_st=atm" target="_blank" rel="noopener noreferrer" class="btn-open-maps" data-brand="maps-link">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"></polygon>
+                                <line x1="9" y1="3" x2="9" y2="18"></line>
+                                <line x1="15" y1="6" x2="15" y2="21"></line>
+                            </svg>
+                            <span>Open in Google Maps</span>
+                        </a>
+                        <a href="tel:+251980818485" class="btn-call-boutique" data-brand="phone-link">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+                            </svg>
+                            <span>Call: 0980818485</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Interactive Map Frame Column -->
+                <div class="location-map-col">
+                    <iframe 
+                        class="location-map-frame" 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15772.378942279267!2d38.9744!3d8.7489!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x164b18dfa73efad1%3A0x7d6a45b741e457f!2sBishoftu!5e0!3m2!1sen!2set!4v1710000000000!5m2!1sen!2set"
+                        allowfullscreen="" 
+                        loading="lazy" 
+                        referrerpolicy="no-referrer-when-downgrade"
+                        title="NILEX Fashionhouse Location Map">
+                    </iframe>
+                    <div class="map-badge-overlay">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="var(--gold-primary)">
+                            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+                        </svg>
+                        <span style="font-size: 0.85rem; font-weight: 600; color: var(--ivory);">Next to Farmi Cafe, Bishoftu</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====================================================================
+         HOW TO ORDER & DIRECT INQUIRY GUIDE
+         ==================================================================== -->
+    <section class="order-guide-section" id="order">
+        <div class="container">
+            <div class="section-header reveal-on-scroll">
+                <span class="section-eyebrow">Simple Ordering</span>
+                <h2 class="section-title">How To Place Your Order</h2>
+                <p class="section-desc">Showcasing pieces is simple and direct. Order in 3 easy steps.</p>
+            </div>
+
+            <div class="guide-steps-grid reveal-on-scroll delay-1">
+                <!-- Step 1 -->
+                <div class="guide-step-card">
+                    <span class="step-number">01</span>
+                    <h3 class="step-title">Browse & 3D Rotate</h3>
+                    <p class="step-desc">
+                        Explore our showcase above, drag to orbit in 3D or zoom to see fabric details, and pick your look.
+                    </p>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="guide-step-card">
+                    <span class="step-number">02</span>
+                    <h3 class="step-title">Message @ezana62</h3>
+                    <p class="step-desc">
+                        Click "Inquire About This Piece" to open Telegram directly with the piece name, or call <strong>0980818485</strong>.
+                    </p>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="guide-step-card">
+                    <span class="step-number">03</span>
+                    <h3 class="step-title">Pickup or Delivery</h3>
+                    <p class="step-desc">
+                        Collect your piece at our Bishoftu store (Next to Farmi Cafe) or arrange swift direct delivery.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Inquiry CTA Banner -->
+            <div class="inquiry-banner-box reveal-on-scroll delay-2">
+                <div class="inquiry-banner-text">
+                    <h3>Looking for a specific style or size?</h3>
+                    <p>Message our team on Telegram or call our Bishoftu store directly right now.</p>
+                </div>
+                <div class="inquiry-banner-actions">
+                    <a href="https://t.me/ezana62" target="_blank" rel="noopener noreferrer" class="btn-primary" data-brand="telegram-link">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.19-.08-.05-.19-.02-.27 0-.12.03-1.99 1.27-5.62 3.72-.53.36-1.01.54-1.44.53-.47-.01-1.38-.27-2.06-.49-.83-.27-1.49-.42-1.43-.88.03-.24.38-.49 1.03-.75 4.04-1.76 6.74-2.92 8.09-3.49 3.85-1.6 4.65-1.88 5.17-1.89.11 0 .37.03.54.17.14.12.18.28.2.45-.02.07-.02.21-.04.34z"/>
+                        </svg>
+                        <span>Message @ezana62</span>
+                    </a>
+                    <button class="btn-secondary btn-copy-phone">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>
+                        <span>Copy Phone (0980818485)</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====================================================================
+         TIKTOK SPOTLIGHT & COMMUNITY
+         ==================================================================== -->
+    <section class="tiktok-section" id="tiktok">
+        <div class="container">
+            <div class="tiktok-card reveal-on-scroll">
+                <div class="tiktok-info">
+                    <span class="tiktok-badge">TikTok Creator Hub</span>
+                    <h2 class="tiktok-title">Follow @nilexfashion1</h2>
+                    <p class="tiktok-desc">
+                        Watch our latest lookbook reels, new arrivals in Bishoftu, styling guides, and streetwear showcases on TikTok.
+                    </p>
+                </div>
+                <a href="https://www.tiktok.com/@nilexfashion1" target="_blank" rel="noopener noreferrer" class="btn-tiktok-cta" data-brand="tiktok-link">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64c.29 0 .58.04.85.12V9.38a6.33 6.33 0 0 0-.85-.06A6.34 6.34 0 0 0 3 15.66a6.34 6.34 0 0 0 10.82 4.47v-8.1a8.17 8.17 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-2.9-3.46h3.9z"/>
+                    </svg>
+                    <span>Follow @nilexfashion1</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====================================================================
+         3D INTERACTIVE ROTATABLE & ZOOMABLE VIEWER (LIGHTBOX)
+         ==================================================================== -->
+    <div class="lightbox-modal" id="product-lightbox" role="dialog" aria-modal="true" aria-hidden="true">
+        <!-- Top Header Bar -->
+        <div class="lightbox-top-bar">
+            <div class="modal-piece-title-pill" id="modal-piece-title">Piece 3D Preview</div>
+            <button class="lightbox-close-btn" aria-label="Close 3D Viewer">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+        </div>
+
+        <!-- 3D Spatial Viewport Stage -->
+        <div class="lightbox-3d-viewport" id="lightbox-3d-viewport">
+            <!-- Floating 3D Showroom Controls Toolbar -->
+            <div class="lightbox-3d-toolbar">
+                <!-- 3D Auto-Orbit Turntable Toggle -->
+                <button class="btn-3d-tool" id="btn-3d-auto-orbit" title="Toggle 3D Showroom Auto-Orbit">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="9"></circle>
+                        <path d="M12 3a9 9 0 0 1 9 9"></path>
+                        <polyline points="18 12 21 12 21 9"></polyline>
+                    </svg>
+                    <span>3D Orbit</span>
+                </button>
+
+                <div class="toolbar-divider"></div>
+
+                <!-- Angle Presets -->
+                <button class="btn-3d-tool btn-3d-icon-only" id="btn-3d-preset-front" title="Front Angle (0°)">0°</button>
+                <button class="btn-3d-tool btn-3d-icon-only" id="btn-3d-preset-angle" title="3D Isometric Tilt">3D</button>
+
+                <div class="toolbar-divider"></div>
+
+                <!-- Zoom Out -->
+                <button class="btn-3d-tool btn-3d-icon-only" id="btn-3d-zoom-out" title="Zoom Out (-)">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        <line x1="8" y1="11" x2="14" y2="11"></line>
+                    </svg>
+                </button>
+
+                <!-- Zoom Level Badge -->
+                <span class="viewer-zoom-badge" id="viewer-3d-zoom-level">100%</span>
+
+                <!-- Zoom In -->
+                <button class="btn-3d-tool btn-3d-icon-only" id="btn-3d-zoom-in" title="Zoom In (+)">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        <line x1="11" y1="8" x2="11" y2="14"></line>
+                        <line x1="8" y1="11" x2="14" y2="11"></line>
+                    </svg>
+                </button>
+
+                <div class="toolbar-divider"></div>
+
+                <!-- Reset 3D View -->
+                <button class="btn-3d-tool btn-3d-icon-only" id="btn-3d-reset" title="Reset 3D Space (0)">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+                        <path d="M3 3v5h5"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- 3D Scene / Turntable Plane -->
+            <div class="lightbox-3d-scene" id="lightbox-3d-scene">
+                <div class="lightbox-3d-card" id="lightbox-3d-card">
+                    <img id="lightbox-main-img" src="" alt="3D Garment View">
+                    <div class="lightbox-3d-glare" id="lightbox-3d-glare"></div>
+                </div>
+                <div class="lightbox-3d-floor-shadow" id="lightbox-3d-shadow"></div>
+            </div>
+
+            <!-- 3D Interaction Hint Badge -->
+            <div class="viewer-3d-hint-badge">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <ellipse cx="12" cy="12" rx="9" ry="4"></ellipse>
+                    <path d="M3 12c0 4 4 7 9 7s9-3 9-7"></path>
+                </svg>
+                <span>Drag to 3D Orbit • Scroll to Zoom</span>
+            </div>
+
+            <!-- Prev / Next Navigation Arrows -->
+            <button class="lightbox-nav-btn lightbox-prev-btn" aria-label="Previous Photo">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
+            </button>
+            <button class="lightbox-nav-btn lightbox-next-btn" aria-label="Next Photo">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+            </button>
+        </div>
+
+        <!-- Thumbnails Strip -->
+        <div class="lightbox-thumbs-strip" id="lightbox-thumbnails">
+            <!-- Populated dynamically -->
+        </div>
+
+        <!-- Minimalist Direct Action Bar -->
+        <div class="lightbox-bottom-actions">
+            <a href="https://t.me/ezana62" id="modal-btn-telegram" target="_blank" rel="noopener noreferrer" class="btn-modal-inquire-direct">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.19-.08-.05-.19-.02-.27 0-.12.03-1.99 1.27-5.62 3.72-.53.36-1.01.54-1.44.53-.47-.01-1.38-.27-2.06-.49-.83-.27-1.49-.42-1.43-.88.03-.24.38-.49 1.03-.75 4.04-1.76 6.74-2.92 8.09-3.49 3.85-1.6 4.65-1.88 5.17-1.89.11 0 .37.03.54.17.14.12.18.28.2.45-.02.07-.02.21-.04.34z"/>
+                </svg>
+                <span>Inquire About This Piece</span>
+            </a>
+            <a href="tel:+251980818485" id="modal-btn-call" class="btn-modal-call-direct">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+                </svg>
+                <span>Call: 0980818485</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- ====================================================================
+         FLOATING ACTION BUTTONS & QUICK CONTACT
+         ==================================================================== -->
+    <div class="floating-quick-bar">
+        <!-- Telegram Floating Button -->
+        <a href="https://t.me/ezana62" target="_blank" rel="noopener noreferrer" class="floating-btn floating-telegram" data-tooltip="Order on Telegram (@ezana62)" aria-label="Message on Telegram">
+            <svg viewBox="0 0 24 24">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.19-.08-.05-.19-.02-.27 0-.12.03-1.99 1.27-5.62 3.72-.53.36-1.01.54-1.44.53-.47-.01-1.38-.27-2.06-.49-.83-.27-1.49-.42-1.43-.88.03-.24.38-.49 1.03-.75 4.04-1.76 6.74-2.92 8.09-3.49 3.85-1.6 4.65-1.88 5.17-1.89.11 0 .37.03.54.17.14.12.18.28.2.45-.02.07-.02.21-.04.34z"/>
+            </svg>
+        </a>
+
+        <!-- Phone Floating Button -->
+        <a href="tel:+251980818485" class="floating-btn floating-phone" data-tooltip="Call Store (0980818485)" aria-label="Call NILEX Men's Store">
+            <svg viewBox="0 0 24 24">
+                <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+            </svg>
+        </a>
+
+        <!-- Scroll to Top -->
+        <button class="floating-btn floating-scroll-top" data-tooltip="Back to Top" aria-label="Scroll to top">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="18 15 12 9 6 15"></polyline>
+            </svg>
+        </button>
+    </div>
+
+    <!-- ====================================================================
+         FOOTER
+         ==================================================================== -->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-top-grid">
+                <!-- Brand Column -->
+                <div class="footer-brand-col">
+                    <a href="#" class="brand-logo">
+                        <div class="logo-badge">
+                            <img src="assets/images/logo.jpg" alt="NILEX Logo">
+                        </div>
+                        <div class="brand-meta">
+                            <span class="brand-title">NILEX</span>
+                            <span class="brand-tagline-mini">Flow like the nile</span>
+                        </div>
+                    </a>
+                    <p class="footer-brand-desc">
+                        Curated men's clothing store in Bishoftu, Ethiopia. High fashion, premium linens, and contemporary streetwear that flows effortlessly with life.
+                    </p>
+                </div>
+
+                <!-- Navigation Links -->
+                <div>
+                    <h4 class="footer-heading">Men's Collections</h4>
+                    <ul class="footer-links-list">
+                        <li><a href="#collections">Urban Flow Streetwear</a></li>
+                        <li><a href="#collections">Nile Signature Linens</a></li>
+                        <li><a href="#collections">Casual Jackets & Layers</a></li>
+                        <li><a href="#collections">Heavyweight Hoodies</a></li>
+                        <li><a href="#collections">Men's Accessories</a></li>
+                    </ul>
+                </div>
+
+                <!-- Quick Links -->
+                <div>
+                    <h4 class="footer-heading">Experience</h4>
+                    <ul class="footer-links-list">
+                        <li><a href="#philosophy">The Spirit of the Nile</a></li>
+                        <li><a href="#location">Boutique & Map</a></li>
+                        <li><a href="#order">How to Order</a></li>
+                        <li><a href="https://www.tiktok.com/@nilexfashion1" target="_blank" rel="noopener noreferrer">TikTok Community</a></li>
+                        <li><a href="https://t.me/ezana62" target="_blank" rel="noopener noreferrer">Telegram Concierge</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact & Location Info -->
+                <div>
+                    <h4 class="footer-heading">Store Details</h4>
+                    <div class="footer-contact-item">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                        </svg>
+                        <span>📍 Bishoftu, Next to Farmi Cafe, Ethiopia</span>
+                    </div>
+                    <div class="footer-contact-item">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+                        </svg>
+                        <span>Phone: <a href="tel:+251980818485">0980818485</a></span>
+                    </div>
+                    <div class="footer-contact-item">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.19-.08-.05-.19-.02-.27 0-.12.03-1.99 1.27-5.62 3.72-.53.36-1.01.54-1.44.53-.47-.01-1.38-.27-2.06-.49-.83-.27-1.49-.42-1.43-.88.03-.24.38-.49 1.03-.75 4.04-1.76 6.74-2.92 8.09-3.49 3.85-1.6 4.65-1.88 5.17-1.89.11 0 .37.03.54.17.14.12.18.28.2.45-.02.07-.02.21-.04.34z"/>
+                        </svg>
+                        <span>Telegram: <a href="https://t.me/ezana62" target="_blank" rel="noopener noreferrer">@ezana62</a></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom Bar -->
+            <div class="footer-bottom-bar">
+                <p>&copy; 2024–2026 NILEX Men's Fashionhouse. All Rights Reserved.</p>
+                <p class="footer-slogan">"Flow like the nile"</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Files -->
+    <script src="js/data.js"></script>
+    <script src="js/animations.js"></script>
+    <script src="js/lightbox.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

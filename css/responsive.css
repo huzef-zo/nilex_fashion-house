@@ -1,0 +1,300 @@
+/* ==========================================================================
+   NILEX FASHIONHOUSE - RESPONSIVE STYLES
+   Slogan: "Flow like the nile"
+   ========================================================================== */
+
+/* Large Tablets & Small Laptops (Max 1024px) */
+@media (max-width: 1024px) {
+    :root {
+        --nav-height: 74px;
+    }
+
+    .site-header {
+        padding: 0 20px;
+    }
+
+    .hero-quick-badges {
+        grid-template-columns: 1fr;
+        max-width: 500px;
+    }
+
+    .philosophy-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+
+    .philosophy-img-main {
+        height: 420px;
+    }
+
+    .philosophy-card-floating {
+        right: 10px;
+        bottom: -20px;
+    }
+
+    .location-card-container {
+        grid-template-columns: 1fr;
+    }
+
+    .location-map-col {
+        min-height: 340px;
+    }
+
+    .footer-top-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 36px;
+    }
+
+    .guide-steps-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .lightbox-3d-viewport {
+        height: 58vh;
+        min-height: 380px;
+    }
+
+    .lightbox-3d-card img {
+        max-height: 48vh;
+    }
+}
+
+/* Mobile Screens & Tablets (Max 768px) */
+@media (max-width: 768px) {
+    .mobile-toggle {
+        display: flex;
+    }
+
+    .nav-menu {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 82%;
+        max-width: 340px;
+        height: 100vh;
+        background: rgba(4, 10, 18, 0.98);
+        backdrop-filter: blur(25px);
+        -webkit-backdrop-filter: blur(25px);
+        border-left: 1px solid var(--glass-border);
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        padding: 40px 32px;
+        gap: 24px;
+        transition: right var(--transition-normal);
+        z-index: 100;
+        box-shadow: -10px 0 40px rgba(0, 0, 0, 0.7);
+    }
+
+    .nav-menu.open {
+        right: 0;
+    }
+
+    .nav-link {
+        font-size: 1.15rem;
+    }
+
+    .nav-actions .btn-nav-telegram {
+        display: none;
+    }
+
+    .hero-section {
+        padding-top: calc(var(--nav-height) + 20px);
+        padding-bottom: 40px;
+    }
+
+    .hero-title {
+        font-size: 2.6rem;
+    }
+
+    .hero-subtitle {
+        font-size: 1.3rem;
+    }
+
+    .hero-actions {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .hero-actions .btn-primary,
+    .hero-actions .btn-secondary {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .showcase-nav-bar {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 16px;
+        padding: 16px;
+    }
+
+    .search-wrapper, .search-input {
+        width: 100%;
+    }
+
+    .search-input:focus {
+        width: 100%;
+    }
+
+    .collections-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .collection-card {
+        height: 420px;
+    }
+
+    .products-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .product-media-wrap {
+        height: 340px;
+    }
+
+    .category-header-banner {
+        padding: 24px;
+    }
+
+    .category-banner-title {
+        font-size: 1.6rem;
+    }
+
+    .location-details-col {
+        padding: 28px 20px;
+    }
+
+    .location-title {
+        font-size: 1.7rem;
+    }
+
+    .location-actions-row {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .btn-open-maps, .btn-call-boutique {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .tiktok-card {
+        padding: 30px 20px;
+        text-align: center;
+    }
+
+    .tiktok-info {
+        text-align: center;
+    }
+
+    .btn-tiktok-cta {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .inquiry-banner-box {
+        padding: 28px 20px;
+        text-align: center;
+    }
+
+    .inquiry-banner-text {
+        text-align: center;
+    }
+
+    .inquiry-banner-actions {
+        width: 100%;
+        flex-direction: column;
+    }
+
+    .inquiry-banner-actions .btn-primary,
+    .inquiry-banner-actions .btn-secondary {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .footer-top-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+
+    .floating-quick-bar {
+        bottom: 20px;
+        right: 18px;
+    }
+
+    .floating-btn {
+        width: 48px;
+        height: 48px;
+    }
+
+    /* 3D Viewer Mobile Layout */
+    .lightbox-modal {
+        padding: 12px 14px 18px;
+    }
+
+    .modal-piece-title-pill {
+        font-size: 0.82rem;
+        max-width: 75%;
+        padding: 6px 12px;
+    }
+
+    .lightbox-3d-viewport {
+        height: 50vh;
+        min-height: 320px;
+    }
+
+    .lightbox-3d-card img {
+        max-height: 42vh;
+    }
+
+    .lightbox-3d-toolbar {
+        top: 8px;
+        padding: 4px 8px;
+        gap: 4px;
+    }
+
+    .btn-3d-tool {
+        height: 30px;
+        font-size: 0.72rem;
+        padding: 0 8px;
+    }
+
+    .btn-3d-icon-only {
+        width: 30px;
+    }
+
+    .lightbox-bottom-actions {
+        flex-direction: column;
+        width: 100%;
+        gap: 10px;
+    }
+
+    .btn-modal-inquire-direct,
+    .btn-modal-call-direct {
+        width: 100%;
+    }
+}
+
+/* Very Small Mobile Screens (Max 420px) */
+@media (max-width: 420px) {
+    .brand-title {
+        font-size: 1.15rem;
+    }
+
+    .logo-badge {
+        width: 38px;
+        height: 38px;
+    }
+
+    .hero-title {
+        font-size: 2.2rem;
+    }
+
+    .philosophy-card-floating {
+        position: static;
+        margin-top: 16px;
+        max-width: 100%;
+    }
+}
