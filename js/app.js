@@ -122,57 +122,43 @@ function renderCurrentView() {
 }
 
 /**
- * LEVEL 1: Render All Men's Collections Grid
+ * LEVEL 1: Render All Men's Collections as a Card Stack Fan Carousel
  */
 function renderCollectionsView(container) {
-    const grid = document.createElement('div');
-    grid.className = 'collections-grid';
+    const stackContainer = document.createElement('div');
+    stackContainer.className = 'collections-stack-wrapper';
+    container.appendChild(stackContainer);
 
-    appState.allCollections.forEach((col) => {
-        const productCount = window.getCollectionProductCount ? window.getCollectionProductCount(col) : 0;
-        const subCount = col.subcollections ? col.subcollections.length : 0;
-
-        const card = document.createElement('article');
-        card.className = 'collection-card';
-        card.innerHTML = `
-            <div class="collection-img-wrap">
-                <img src="${col.coverImage}" alt="${col.name}" loading="lazy" onerror="this.src='assets/images/logo.jpg'">
-            </div>
-            <div class="collection-overlay"></div>
-            <span class="collection-badge-tag">${col.badge || 'Men\'s Collection'}</span>
-            <span class="collection-item-counter">${subCount} Categories • ${productCount} Pieces</span>
-            
-            <div class="collection-content">
-                <h3 class="collection-name">${col.name}</h3>
-                <p class="collection-tagline">${col.tagline || ''}</p>
-                <p class="collection-description">${col.description || ''}</p>
-                <div class="btn-explore-collection">
-                    <span>Explore Collection</span>
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                        <line x1="5" y1="12" x2="19" y2="12"></line>
-                        <polyline points="12 5 19 12 12 19"></polyline>
-                    </svg>
-                </div>
-            </div>
-        `;
-
-        card.addEventListener('click', () => {
-            appState.currentCollectionId = col.id;
-            appState.currentSubcollectionId = null;
-            appState.searchQuery = '';
-            const searchInput = document.getElementById('collection-search-input');
-            if (searchInput) searchInput.value = '';
-            renderCurrentView();
+    if (window.CardStack) {
+        new window.CardStack(stackContainer, {
+            items: appState.allCollections,
+            cardShape: 'squarish',
+            getItemData: (col) => {
+                const productCount = window.getCollectionProductCount ? window.getCollectionProductCount(col) : 0;
+                const subCount = col.subcollections ? col.subcollections.length : 0;
+                return {
+                    name: col.name,
+                    tagline: col.tagline || '',
+                    description: col.description || '',
+                    coverImage: col.coverImage,
+                    badge: col.badge || "Men's Collection",
+                    countText: `${subCount} Categories • ${productCount} Pieces`
+                };
+            },
+            onSelect: (col) => {
+                appState.currentCollectionId = col.id;
+                appState.currentSubcollectionId = null;
+                appState.searchQuery = '';
+                const searchInput = document.getElementById('collection-search-input');
+                if (searchInput) searchInput.value = '';
+                renderCurrentView();
+            }
         });
-
-        grid.appendChild(card);
-    });
-
-    container.appendChild(grid);
+    }
 }
 
 /**
- * LEVEL 2: Render Sub-Collections Grid
+ * LEVEL 2: Render Sub-Collections as a Portrait Card Stack Fan Carousel
  */
 function renderSubcollectionsView(container) {
     const collection = appState.allCollections.find(c => c.id === appState.currentCollectionId);
@@ -202,43 +188,32 @@ function renderSubcollectionsView(container) {
 
     container.appendChild(banner);
 
-    // Subcollections Grid
-    const subGrid = document.createElement('div');
-    subGrid.className = 'subcollections-grid';
+    // Subcollections Stack Container
+    const stackContainer = document.createElement('div');
+    stackContainer.className = 'subcollections-stack-wrapper';
+    container.appendChild(stackContainer);
 
-    if (collection.subcollections && collection.subcollections.length > 0) {
-        collection.subcollections.forEach((sub) => {
-            const count = sub.products ? sub.products.length : 0;
-            const subCard = document.createElement('div');
-            subCard.className = 'subcollection-card';
-            subCard.innerHTML = `
-                <div class="subcol-img-wrap">
-                    <img src="${sub.coverImage}" alt="${sub.name}" loading="lazy" onerror="this.src='assets/images/logo.jpg'">
-                    <span class="subcol-count-pill">${count} Lookbook Pieces</span>
-                </div>
-                <div class="subcol-details">
-                    <h3 class="subcol-title">${sub.name}</h3>
-                    <p class="subcol-description">${sub.description || ''}</p>
-                    <div class="btn-explore-collection">
-                        <span>Browse Pieces</span>
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <line x1="5" y1="12" x2="19" y2="12"></line>
-                            <polyline points="12 5 19 12 12 19"></polyline>
-                        </svg>
-                    </div>
-                </div>
-            `;
-
-            subCard.addEventListener('click', () => {
+    if (window.CardStack && collection.subcollections && collection.subcollections.length > 0) {
+        new window.CardStack(stackContainer, {
+            items: collection.subcollections,
+            cardShape: 'portrait',
+            getItemData: (sub) => {
+                const count = sub.products ? sub.products.length : 0;
+                return {
+                    name: sub.name,
+                    tagline: '',
+                    description: sub.description || '',
+                    coverImage: sub.coverImage,
+                    badge: collection.name,
+                    countText: `${count} Lookbook Pieces`
+                };
+            },
+            onSelect: (sub) => {
                 appState.currentSubcollectionId = sub.id;
                 renderCurrentView();
-            });
-
-            subGrid.appendChild(subCard);
+            }
         });
     }
-
-    container.appendChild(subGrid);
 
     // Bind Back Button
     const backBtn = banner.querySelector('#btn-back-to-collections');
