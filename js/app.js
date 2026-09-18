@@ -219,7 +219,7 @@ function renderSubcollectionsView(container) {
 }
 
 /**
- * LEVEL 3: Render Products & Lookbook Items Grid
+ * LEVEL 3: Render Products & Lookbook Items Stack
  */
 function renderProductsView(container) {
     const collection = appState.allCollections.find(c => c.id === appState.currentCollectionId);
@@ -247,74 +247,92 @@ function renderProductsView(container) {
     `;
     container.appendChild(banner);
 
-    // Products Grid
-    const prodGrid = document.createElement('div');
-    prodGrid.className = 'products-grid';
-
     const products = subcollection.products || [];
 
     if (products.length === 0) {
-        prodGrid.innerHTML = `
-            <div style="grid-column: 1/-1; text-align: center; padding: 60px; color: var(--text-secondary);">
-                <p style="font-size: 1.1rem; margin-bottom: 12px;">No pieces currently listed in this category.</p>
-                <p style="font-size: 0.9rem;">You can easily add images and product details in <code>js/data.js</code>!</p>
-            </div>
+        const emptyBox = document.createElement('div');
+        emptyBox.style.textAlign = 'center';
+        emptyBox.style.padding = '60px';
+        emptyBox.style.color = 'var(--text-secondary)';
+        emptyBox.innerHTML = `
+            <p style="font-size: 1.1rem; margin-bottom: 12px;">No pieces currently listed in this category.</p>
+            <p style="font-size: 0.9rem;">You can easily add images to this subcollection's <code>images/</code> folder!</p>
         `;
-    } else {
-        products.forEach((product) => {
-            const card = document.createElement('article');
-            card.className = 'product-card';
-            const badgeHtml = product.tag ? `<span class="product-badge-overlay">${escapeHtml(product.tag)}</span>` : '';
-            card.innerHTML = `
-                <div class="product-media-wrap">
-                    <img src="${product.coverImage}" alt="${product.code || product.id || 'Product'}" loading="lazy" onerror="this.src='assets/images/logo.jpg'">
-                    ${badgeHtml}
-                    <div class="product-hover-action-overlay">
-                        <span class="btn-quick-view">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                <circle cx="11" cy="11" r="8"></circle>
-                                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                                <line x1="11" y1="8" x2="11" y2="14"></line>
-                                <line x1="8" y1="11" x2="14" y2="11"></line>
-                            </svg>
-                            View
-                        </span>
+        container.appendChild(emptyBox);
+    } else if (window.CardStack) {
+        const stackContainer = document.createElement('div');
+        stackContainer.className = 'products-stack-wrapper';
+        container.appendChild(stackContainer);
+
+        new window.CardStack(stackContainer, {
+            items: products,
+            cardShape: 'portrait',
+            getItemData: (prod) => ({
+                name: '',
+                tagline: '',
+                description: '',
+                coverImage: prod.coverImage,
+                badge: '',
+                countText: ''
+            }),
+            renderCard: (prod, data) => {
+                const badgeHtml = prod.tag ? `<span class="product-badge-overlay">${escapeHtml(prod.tag)}</span>` : '';
+                const codeStr = escapeHtml(prod.code || prod.id || '');
+                return `
+                    <div class="stack-card-inner">
+                        <img class="stack-card-image" src="${prod.coverImage}" alt="${codeStr}" loading="lazy" onerror="this.src='assets/images/logo.jpg'">
+                        <div class="stack-card-overlay"></div>
+                        ${badgeHtml ? `<div class="stack-card-top-bar">${badgeHtml}</div>` : ''}
+                        <div class="product-stack-content">
+                            <span class="product-code-meta">${codeStr}</span>
+                            <div class="product-card-actions">
+                                <button class="btn-card-inquire" title="Inquire on Telegram">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.19-.08-.05-.19-.02-.27 0-.12.03-1.99 1.27-5.62 3.72-.53.36-1.01.54-1.44.53-.47-.01-1.38-.27-2.06-.49-.83-.27-1.49-.42-1.43-.88.03-.24.38-.49 1.03-.75 4.04-1.76 6.74-2.92 8.09-3.49 3.85-1.6 4.65-1.88 5.17-1.89.11 0 .37.03.54.17.14.12.18.28.2.45-.02.07-.02.21-.04.34z"/>
+                                    </svg>
+                                    <span>Inquire Piece</span>
+                                </button>
+                                <a href="tel:+251980818485" class="btn-card-call" title="Call directly">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="product-info-wrap">
-                    <span class="product-code-meta">${product.code || product.id}</span>
-                    <div class="product-card-actions">
-                        <button class="btn-card-inquire" title="Inquire on Telegram">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.19-.08-.05-.19-.02-.27 0-.12.03-1.99 1.27-5.62 3.72-.53.36-1.01.54-1.44.53-.47-.01-1.38-.27-2.06-.49-.83-.27-1.49-.42-1.43-.88.03-.24.38-.49 1.03-.75 4.04-1.76 6.74-2.92 8.09-3.49 3.85-1.6 4.65-1.88 5.17-1.89.11 0 .37.03.54.17.14.12.18.28.2.45-.02.07-.02.21-.04.34z"/>
-                            </svg>
-                            <span>Inquire Piece</span>
-                        </button>
-                        <a href="tel:+251980818485" class="btn-card-call" title="Call directly">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
-                            </svg>
-                        </a>
-                    </div>
-                </div>
-            `;
+                `;
+            },
+            onCardCreated: (cardEl, prod) => {
+                const stopAll = (e) => {
+                    e.stopPropagation();
+                };
 
-            // Open Lightbox on card click
-            card.querySelector('.product-media-wrap').addEventListener('click', () => {
-                if (window.openProductModal) window.openProductModal(product);
-            });
+                const inquireBtn = cardEl.querySelector('.btn-card-inquire');
+                if (inquireBtn) {
+                    inquireBtn.addEventListener('touchstart', stopAll, { passive: true });
+                    inquireBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        const codeStr = prod.code || prod.id;
+                        const inquiryMsg = encodeURIComponent(`Hello Nilex Fashionhouse! I would like to inquire about piece: ${codeStr}`);
+                        window.open(`https://t.me/ezana62?text=${inquiryMsg}`, '_blank', 'noopener,noreferrer');
+                    });
+                }
 
-            card.querySelector('.btn-card-inquire').addEventListener('click', (e) => {
-                e.stopPropagation();
-                const inquiryMsg = encodeURIComponent(`Hello Nilex Fashionhouse! I would like to inquire about piece: ${product.code || product.id}`);
-                window.open(`https://t.me/ezana62?text=${inquiryMsg}`, '_blank', 'noopener,noreferrer');
-            });
-
-            prodGrid.appendChild(card);
+                const callBtn = cardEl.querySelector('.btn-card-call');
+                if (callBtn) {
+                    callBtn.addEventListener('touchstart', stopAll, { passive: true });
+                    callBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                    });
+                }
+            },
+            onSelect: (prod) => {
+                if (window.openProductModal) {
+                    window.openProductModal(prod);
+                }
+            }
         });
     }
-
-    container.appendChild(prodGrid);
 
     // Bind Back Button
     const backBtn = banner.querySelector('#btn-back-to-subcollections');
