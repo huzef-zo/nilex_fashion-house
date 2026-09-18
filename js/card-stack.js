@@ -26,6 +26,8 @@ class CardStack {
             badge: item.badge || '',
             countText: item.countText || ''
         }));
+        this.renderCard = options.renderCard || null;
+        this.onCardCreated = options.onCardCreated || null;
         this.onSelect = options.onSelect || (() => {});
 
         this.currentIndex = 0;
@@ -62,19 +64,27 @@ class CardStack {
             card.className = `card-stack-card ${this.cardShape}`;
             card.dataset.index = index;
 
-            card.innerHTML = `
-                <div class="stack-card-inner">
-                    <img class="stack-card-image" src="${data.coverImage}" alt="${data.name}" loading="lazy" onerror="this.src='assets/images/logo.jpg'">
-                    <div class="stack-card-overlay"></div>
-                    <div class="stack-card-top-bar">
-                        ${data.badge ? `<span class="stack-card-badge" title="${data.badge}">${data.badge}</span>` : '<span></span>'}
-                        ${data.countText ? `<span class="stack-card-count">${data.countText}</span>` : ''}
+            if (this.renderCard) {
+                card.innerHTML = this.renderCard(item, data, index);
+            } else {
+                card.innerHTML = `
+                    <div class="stack-card-inner">
+                        <img class="stack-card-image" src="${data.coverImage}" alt="${data.name}" loading="lazy" onerror="this.src='assets/images/logo.jpg'">
+                        <div class="stack-card-overlay"></div>
+                        <div class="stack-card-top-bar">
+                            ${data.badge ? `<span class="stack-card-badge" title="${data.badge}">${data.badge}</span>` : '<span></span>'}
+                            ${data.countText ? `<span class="stack-card-count">${data.countText}</span>` : ''}
+                        </div>
+                        <div class="stack-card-content">
+                            <h3 class="stack-card-title">${data.name}</h3>
+                        </div>
                     </div>
-                    <div class="stack-card-content">
-                        <h3 class="stack-card-title">${data.name}</h3>
-                    </div>
-                </div>
-            `;
+                `;
+            }
+
+            if (this.onCardCreated) {
+                this.onCardCreated(card, item, index);
+            }
 
             this.stage.appendChild(card);
             this.cards.push(card);
@@ -282,13 +292,18 @@ class CardStack {
         const taglineHtml = data.tagline ? `<p class="caption-tagline">${data.tagline}</p>` : '';
         const descHtml = data.description ? `<p class="caption-desc">${data.description}</p>` : '';
 
-        this.captionBox.innerHTML = `
-            <div class="caption-content-inner">
-                <span class="caption-counter">${this.currentIndex + 1} / ${this.items.length}</span>
-                ${taglineHtml}
-                ${descHtml}
-            </div>
-        `;
+        if (!data.tagline && !data.description) {
+            this.captionBox.style.display = 'none';
+        } else {
+            this.captionBox.style.display = '';
+            this.captionBox.innerHTML = `
+                <div class="caption-content-inner">
+                    <span class="caption-counter">${this.currentIndex + 1} / ${this.items.length}</span>
+                    ${taglineHtml}
+                    ${descHtml}
+                </div>
+            `;
+        }
 
         // Update Dots
         if (this.dots) {
