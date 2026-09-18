@@ -57,6 +57,13 @@ function bindBrandInfo() {
         el.textContent = brand.telegramHandle;
     });
 
+    // Update Telegram Channel links
+    document.querySelectorAll('[data-brand="telegram-channel-link"]').forEach(el => {
+        el.href = brand.telegramChannelUrl;
+        el.target = '_blank';
+        el.rel = 'noopener noreferrer';
+    });
+
     // Update TikTok links
     document.querySelectorAll('[data-brand="tiktok-link"]').forEach(el => {
         el.href = brand.tiktokUrl;
