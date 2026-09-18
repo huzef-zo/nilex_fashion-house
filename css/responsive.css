@@ -130,26 +130,24 @@
         padding: 16px;
     }
 
-    .search-wrapper, .search-input {
-        width: 100%;
-    }
-
-    .search-input:focus {
-        width: 100%;
-    }
 
     .card-stack-wrapper {
-        padding: 10px 0;
+        margin-top: 15px;
+        padding: 15px 0 10px;
+    }
+
+    .card-stack-stage {
+        height: 420px;
     }
 
     .card-stack-card.squarish {
-        width: 300px;
-        height: 360px;
+        width: 320px;
+        height: 390px;
     }
 
     .card-stack-card.portrait {
-        width: 270px;
-        height: 390px;
+        width: 285px;
+        height: 410px;
     }
 
     .stack-card-title {
