@@ -200,16 +200,24 @@
         justify-content: center;
     }
 
-    .tiktok-card {
+    .community-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .tiktok-card,
+    .telegram-channel-card {
         padding: 30px 20px;
         text-align: center;
+        align-items: center;
     }
 
-    .tiktok-info {
+    .tiktok-info,
+    .telegram-channel-info {
         text-align: center;
     }
 
-    .btn-tiktok-cta {
+    .btn-tiktok-cta,
+    .btn-telegram-channel-cta {
         width: 100%;
         justify-content: center;
     }

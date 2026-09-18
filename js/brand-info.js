@@ -17,6 +17,7 @@ window.NILEX_BRAND_INFO = {
     phoneTel: "tel:+251980818485",
     telegramHandle: "@ezana62",
     telegramUrl: "https://t.me/ezana62",
+    telegramChannelUrl: "https://t.me/nilexfashionn",
     tiktokHandle: "@nilexfashion1",
     tiktokUrl: "https://www.tiktok.com/@nilexfashion1",
     logoPath: "assets/images/logo.jpg",
