@@ -264,10 +264,11 @@ function renderProductsView(container) {
         products.forEach((product) => {
             const card = document.createElement('article');
             card.className = 'product-card';
+            const badgeHtml = product.tag ? `<span class="product-badge-overlay">${escapeHtml(product.tag)}</span>` : '';
             card.innerHTML = `
                 <div class="product-media-wrap">
                     <img src="${product.coverImage}" alt="${product.code || product.id || 'Product'}" loading="lazy" onerror="this.src='assets/images/logo.jpg'">
-                    <span class="product-badge-overlay">${product.tag || 'Men\'s'}</span>
+                    ${badgeHtml}
                     <div class="product-hover-action-overlay">
                         <span class="btn-quick-view">
                             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">

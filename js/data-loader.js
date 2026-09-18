@@ -6,29 +6,43 @@
  */
 
 (function () {
+    const hoodiesSweats = Object.assign({}, window.NILEX_SUBCOLLECTION_HOODIES_SWEATS, {
+        products: window.NILEX_GENERATED_PRODUCTS_HOODIES_SWEATS || []
+    });
+    const teesTops = Object.assign({}, window.NILEX_SUBCOLLECTION_TEES_TOPS, {
+        products: window.NILEX_GENERATED_PRODUCTS_TEES_TOPS || []
+    });
+    const cargoPants = Object.assign({}, window.NILEX_SUBCOLLECTION_CARGO_PANTS, {
+        products: window.NILEX_GENERATED_PRODUCTS_CARGO_PANTS || []
+    });
+
+    const linenShirts = Object.assign({}, window.NILEX_SUBCOLLECTION_LINEN_SHIRTS, {
+        products: window.NILEX_GENERATED_PRODUCTS_LINEN_SHIRTS || []
+    });
+    const linenCoords = Object.assign({}, window.NILEX_SUBCOLLECTION_LINEN_COORDS, {
+        products: window.NILEX_GENERATED_PRODUCTS_LINEN_COORDS || []
+    });
+
+    const bombersJackets = Object.assign({}, window.NILEX_SUBCOLLECTION_BOMBERS_JACKETS, {
+        products: window.NILEX_GENERATED_PRODUCTS_BOMBERS_JACKETS || []
+    });
+
+    const leatherBags = Object.assign({}, window.NILEX_SUBCOLLECTION_LEATHER_BAGS, {
+        products: window.NILEX_GENERATED_PRODUCTS_LEATHER_BAGS || []
+    });
+
     const collections = [
         Object.assign({}, window.NILEX_COLLECTION_URBAN_STREETWEAR, {
-            subcollections: [
-                window.NILEX_SUBCOLLECTION_HOODIES_SWEATS,
-                window.NILEX_SUBCOLLECTION_TEES_TOPS,
-                window.NILEX_SUBCOLLECTION_CARGO_PANTS
-            ]
+            subcollections: [hoodiesSweats, teesTops, cargoPants]
         }),
         Object.assign({}, window.NILEX_COLLECTION_FLOWING_LINENS, {
-            subcollections: [
-                window.NILEX_SUBCOLLECTION_LINEN_SHIRTS,
-                window.NILEX_SUBCOLLECTION_LINEN_COORDS
-            ]
+            subcollections: [linenShirts, linenCoords]
         }),
         Object.assign({}, window.NILEX_COLLECTION_CASUAL_JACKETS, {
-            subcollections: [
-                window.NILEX_SUBCOLLECTION_BOMBERS_JACKETS
-            ]
+            subcollections: [bombersJackets]
         }),
         Object.assign({}, window.NILEX_COLLECTION_MENS_ACCESSORIES, {
-            subcollections: [
-                window.NILEX_SUBCOLLECTION_LEATHER_BAGS
-            ]
+            subcollections: [leatherBags]
         })
     ];
 
