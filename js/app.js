@@ -9,7 +9,6 @@
 const appState = {
     currentCollectionId: null,
     currentSubcollectionId: null,
-    searchQuery: '',
     allCollections: []
 };
 
@@ -21,7 +20,6 @@ document.addEventListener('DOMContentLoaded', () => {
     bindBrandInfo();
     initNavigation();
     initShowcaseView();
-    initSearch();
     initMobileNav();
 });
 
@@ -96,9 +94,7 @@ function renderCurrentView() {
     setTimeout(() => {
         container.innerHTML = '';
 
-        if (appState.searchQuery.trim() !== '') {
-            renderSearchResults(container);
-        } else if (appState.currentCollectionId && appState.currentSubcollectionId) {
+        if (appState.currentCollectionId && appState.currentSubcollectionId) {
             renderProductsView(container);
         } else if (appState.currentCollectionId) {
             renderSubcollectionsView(container);
@@ -148,9 +144,6 @@ function renderCollectionsView(container) {
             onSelect: (col) => {
                 appState.currentCollectionId = col.id;
                 appState.currentSubcollectionId = null;
-                appState.searchQuery = '';
-                const searchInput = document.getElementById('collection-search-input');
-                if (searchInput) searchInput.value = '';
                 renderCurrentView();
             }
         });
@@ -175,7 +168,6 @@ function renderSubcollectionsView(container) {
         <div class="category-banner-info">
             <span class="section-eyebrow">${collection.badge || 'Men\'s Collection'}</span>
             <h2 class="category-banner-title">${collection.name}</h2>
-            <p class="category-banner-desc">${collection.description || ''}</p>
         </div>
         <button class="btn-back-action" id="btn-back-to-collections">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -345,109 +337,6 @@ function renderProductsView(container) {
 }
 
 /**
- * Renders global real-time search results across all items
- */
-function renderSearchResults(container) {
-    const query = appState.searchQuery.toLowerCase().trim();
-
-    // Banner Header
-    const banner = document.createElement('div');
-    banner.className = 'category-header-banner';
-    banner.innerHTML = `
-        <div class="category-banner-info">
-            <span class="section-eyebrow">Search Results</span>
-            <h2 class="category-banner-title">Matching "${escapeHtml(appState.searchQuery)}"</h2>
-            <p class="category-banner-desc">Pieces found across men's collections</p>
-        </div>
-        <button class="btn-back-action" id="btn-clear-search">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="18" y1="6" x2="6" y2="18"></line>
-                <line x1="6" y1="6" x2="18" y2="18"></line>
-            </svg>
-            <span>Clear Search</span>
-        </button>
-    `;
-    container.appendChild(banner);
-
-    // Collect all matching products
-    const matchingProducts = [];
-
-    appState.allCollections.forEach(col => {
-        if (col.subcollections) {
-            col.subcollections.forEach(sub => {
-                if (sub.products) {
-                    sub.products.forEach(p => {
-                        const matchText = `${p.name} ${p.tag || ''} ${p.code || ''} ${col.name} ${sub.name}`.toLowerCase();
-                        if (matchText.includes(query)) {
-                            matchingProducts.push({
-                                product: p,
-                                collectionName: col.name,
-                                subcollectionName: sub.name
-                            });
-                        }
-                    });
-                }
-            });
-        }
-    });
-
-    const resultsGrid = document.createElement('div');
-    resultsGrid.className = 'products-grid';
-
-    if (matchingProducts.length === 0) {
-        resultsGrid.innerHTML = `
-            <div style="grid-column: 1/-1; text-align: center; padding: 60px; color: var(--text-secondary);">
-                <p style="font-size: 1.2rem; color: var(--ivory); margin-bottom: 10px;">No matching pieces found for "${escapeHtml(appState.searchQuery)}".</p>
-                <p style="font-size: 0.9rem;">Try searching for terms like "hoodie", "linen", "tee", "cargo", "jacket", or "bag".</p>
-            </div>
-        `;
-    } else {
-        matchingProducts.forEach(({ product, collectionName, subcollectionName }) => {
-            const photoCount = (product.gallery && product.gallery.length) || 1;
-            const card = document.createElement('article');
-            card.className = 'product-card';
-            card.innerHTML = `
-                <div class="product-media-wrap">
-                    <img src="${product.coverImage}" alt="${product.name}" loading="lazy" onerror="this.src='assets/images/logo.jpg'">
-                    <span class="product-badge-overlay">${subcollectionName}</span>
-                    <span class="product-gallery-pill">${photoCount} Photos</span>
-                    <div class="product-hover-action-overlay">
-                        <span class="btn-quick-view">View & Zoom</span>
-                    </div>
-                </div>
-                <div class="product-info-wrap">
-                    <span class="product-code-meta">${collectionName} • ${product.code || product.id}</span>
-                    <h3 class="product-item-title">${product.name}</h3>
-                    <div class="product-card-actions">
-                        <button class="btn-card-inquire">
-                            <span>Inquire Piece</span>
-                        </button>
-                    </div>
-                </div>
-            `;
-
-            card.addEventListener('click', () => {
-                if (window.openProductModal) window.openProductModal(product);
-            });
-
-            resultsGrid.appendChild(card);
-        });
-    }
-
-    container.appendChild(resultsGrid);
-
-    const clearBtn = banner.querySelector('#btn-clear-search');
-    if (clearBtn) {
-        clearBtn.addEventListener('click', () => {
-            appState.searchQuery = '';
-            const searchInput = document.getElementById('collection-search-input');
-            if (searchInput) searchInput.value = '';
-            renderCurrentView();
-        });
-    }
-}
-
-/**
  * Updates Breadcrumbs trail dynamically
  */
 function updateBreadcrumbs() {
@@ -469,7 +358,6 @@ function updateBreadcrumbs() {
     homeBtn.addEventListener('click', () => {
         appState.currentCollectionId = null;
         appState.currentSubcollectionId = null;
-        appState.searchQuery = '';
         renderCurrentView();
     });
     breadcrumbContainer.appendChild(homeBtn);
@@ -488,7 +376,6 @@ function updateBreadcrumbs() {
             colBtn.textContent = col.name;
             colBtn.addEventListener('click', () => {
                 appState.currentSubcollectionId = null;
-                appState.searchQuery = '';
                 renderCurrentView();
             });
             breadcrumbContainer.appendChild(colBtn);
@@ -511,23 +398,6 @@ function updateBreadcrumbs() {
             breadcrumbContainer.appendChild(subBtn);
         }
     }
-}
-
-/**
- * Real-time Search Input Listener with Debounce
- */
-function initSearch() {
-    const searchInput = document.getElementById('collection-search-input');
-    if (!searchInput) return;
-
-    let debounceTimer = null;
-    searchInput.addEventListener('input', (e) => {
-        clearTimeout(debounceTimer);
-        debounceTimer = setTimeout(() => {
-            appState.searchQuery = e.target.value;
-            renderCurrentView();
-        }, 220);
-    });
 }
 
 /**

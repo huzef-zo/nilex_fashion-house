@@ -66,8 +66,10 @@ class CardStack {
                 <div class="stack-card-inner">
                     <img class="stack-card-image" src="${data.coverImage}" alt="${data.name}" loading="lazy" onerror="this.src='assets/images/logo.jpg'">
                     <div class="stack-card-overlay"></div>
-                    ${data.badge ? `<span class="stack-card-badge">${data.badge}</span>` : ''}
-                    ${data.countText ? `<span class="stack-card-count">${data.countText}</span>` : ''}
+                    <div class="stack-card-top-bar">
+                        ${data.badge ? `<span class="stack-card-badge" title="${data.badge}">${data.badge}</span>` : '<span></span>'}
+                        ${data.countText ? `<span class="stack-card-count">${data.countText}</span>` : ''}
+                    </div>
                     <div class="stack-card-content">
                         <h3 class="stack-card-title">${data.name}</h3>
                     </div>
@@ -151,19 +153,20 @@ class CardStack {
     }
 
     bindEvents() {
-        // Pointer / Touch / Mouse handlers on stage
-        const onStart = (e) => {
+        // Touch events for mobile/touch devices (swipe-to-cycle, tap-to-open)
+        const onTouchStart = (e) => {
+            if (!e.touches || e.touches.length === 0) return;
             this.isDragging = true;
             this.hasMoved = false;
-            this.startX = this.getClientX(e);
+            this.startX = e.touches[0].clientX;
             this.currentX = this.startX;
             this.dragDeltaX = 0;
             this.stage.classList.add('is-dragging');
         };
 
-        const onMove = (e) => {
-            if (!this.isDragging) return;
-            this.currentX = this.getClientX(e);
+        const onTouchMove = (e) => {
+            if (!this.isDragging || !e.touches || e.touches.length === 0) return;
+            this.currentX = e.touches[0].clientX;
             const delta = this.currentX - this.startX;
 
             if (Math.abs(delta) > 5) {
@@ -174,7 +177,7 @@ class CardStack {
             this.updateLayout(true); // pass true for realtime dragging transform
         };
 
-        const onEnd = () => {
+        const onTouchEnd = () => {
             if (!this.isDragging) return;
             this.isDragging = false;
             this.stage.classList.remove('is-dragging');
@@ -186,7 +189,7 @@ class CardStack {
                     this.prev();
                 }
             } else if (!this.hasMoved) {
-                // It was a clean tap / click on front card
+                // Clean tap on front card
                 const frontCard = this.cards[this.currentIndex];
                 if (frontCard) {
                     const item = this.items[this.currentIndex];
@@ -198,36 +201,38 @@ class CardStack {
             this.updateLayout();
         };
 
-        // Touch events
-        this.stage.addEventListener('touchstart', onStart, { passive: true });
-        this.stage.addEventListener('touchmove', onMove, { passive: true });
-        this.stage.addEventListener('touchend', onEnd);
-        this.stage.addEventListener('touchcancel', onEnd);
+        this.stage.addEventListener('touchstart', onTouchStart, { passive: true });
+        this.stage.addEventListener('touchmove', onTouchMove, { passive: true });
+        this.stage.addEventListener('touchend', onTouchEnd);
+        this.stage.addEventListener('touchcancel', onTouchEnd);
 
-        // Pointer / Mouse events
-        this.stage.addEventListener('pointerdown', (e) => {
-            if (e.pointerType === 'touch') return; // Handled by touch events
-            onStart(e);
-        });
+        // Continuous Hover-Scrub for Desktop (mouse / fine pointer)
+        const onHoverScrub = (e) => {
+            if (e.pointerType === 'touch') return;
+            if (this.items.length <= 1) return;
 
-        window.addEventListener('pointermove', (e) => {
-            if (this.isDragging && e.pointerType !== 'touch') {
-                onMove(e);
+            const rect = this.wrapper.getBoundingClientRect();
+            if (!rect.width) return;
+
+            const mouseXFraction = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+            const scrubIndex = Math.round(mouseXFraction * (this.items.length - 1));
+
+            if (scrubIndex !== this.currentIndex && scrubIndex >= 0 && scrubIndex < this.items.length) {
+                this.goTo(scrubIndex);
             }
-        });
+        };
 
-        window.addEventListener('pointerup', (e) => {
-            if (this.isDragging && e.pointerType !== 'touch') {
-                onEnd();
-            }
-        });
+        this.wrapper.addEventListener('pointermove', onHoverScrub);
 
-        // Also handle card click explicitly if user clicked a side card to bring it front
+        // Click handling: clicking the front card triggers navigation
         this.cards.forEach((card, idx) => {
             card.addEventListener('click', (e) => {
-                if (this.hasMoved) return; // Ignore click if user was dragging
-                if (idx !== this.currentIndex) {
-                    e.stopPropagation();
+                if (this.hasMoved) return; // Ignore if user was swiping on touch
+                e.stopPropagation();
+                if (idx === this.currentIndex) {
+                    const item = this.items[idx];
+                    this.onSelect(item, idx);
+                } else {
                     this.goTo(idx);
                 }
             });
@@ -302,7 +307,7 @@ class CardStack {
         const total = this.items.length;
 
         // Responsive offset step and scaling based on screen size
-        let stepX = isMobile ? Math.min(stageWidth * 0.22, 65) : Math.min(stageWidth * 0.28, 160);
+        let stepX = isMobile ? Math.min(stageWidth * 0.22, 65) : Math.min(stageWidth * 0.28, 180);
         let scaleStep = isMobile ? 0.12 : 0.15;
         let rotationStep = isMobile ? 3 : 5;
 
