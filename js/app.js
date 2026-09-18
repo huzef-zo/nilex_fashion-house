@@ -235,7 +235,7 @@ function renderProductsView(container) {
         <div class="category-banner-info">
             <span class="section-eyebrow">${collection.name}</span>
             <h2 class="category-banner-title">${subcollection.name}</h2>
-            <p class="category-banner-desc">${subcollection.description || 'Click any piece to inspect, zoom, rotate, or inquire directly.'}</p>
+            <p class="category-banner-desc">${subcollection.description || 'Click any piece to inspect, zoom, or inquire directly.'}</p>
         </div>
         <button class="btn-back-action" id="btn-back-to-subcollections">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -262,22 +262,12 @@ function renderProductsView(container) {
         `;
     } else {
         products.forEach((product) => {
-            const photoCount = (product.gallery && product.gallery.length) || (product.coverImage ? 1 : 0);
-
             const card = document.createElement('article');
             card.className = 'product-card';
             card.innerHTML = `
                 <div class="product-media-wrap">
-                    <img src="${product.coverImage}" alt="${product.name}" loading="lazy" onerror="this.src='assets/images/logo.jpg'">
+                    <img src="${product.coverImage}" alt="${product.code || product.id || 'Product'}" loading="lazy" onerror="this.src='assets/images/logo.jpg'">
                     <span class="product-badge-overlay">${product.tag || 'Men\'s'}</span>
-                    <span class="product-gallery-pill">
-                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-                            <circle cx="8.5" cy="8.5" r="1.5"></circle>
-                            <polyline points="21 15 16 10 5 21"></polyline>
-                        </svg>
-                        <span>${photoCount} ${photoCount === 1 ? 'Photo' : 'Photos'}</span>
-                    </span>
                     <div class="product-hover-action-overlay">
                         <span class="btn-quick-view">
                             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -286,13 +276,12 @@ function renderProductsView(container) {
                                 <line x1="11" y1="8" x2="11" y2="14"></line>
                                 <line x1="8" y1="11" x2="14" y2="11"></line>
                             </svg>
-                            View & Zoom
+                            View
                         </span>
                     </div>
                 </div>
                 <div class="product-info-wrap">
                     <span class="product-code-meta">${product.code || product.id}</span>
-                    <h3 class="product-item-title">${product.name}</h3>
                     <div class="product-card-actions">
                         <button class="btn-card-inquire" title="Inquire on Telegram">
                             <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
@@ -316,7 +305,7 @@ function renderProductsView(container) {
 
             card.querySelector('.btn-card-inquire').addEventListener('click', (e) => {
                 e.stopPropagation();
-                const inquiryMsg = encodeURIComponent(`Hello Nilex Fashionhouse! I would like to inquire about: ${product.name} (${product.code || product.id})`);
+                const inquiryMsg = encodeURIComponent(`Hello Nilex Fashionhouse! I would like to inquire about piece: ${product.code || product.id}`);
                 window.open(`https://t.me/ezana62?text=${inquiryMsg}`, '_blank', 'noopener,noreferrer');
             });
 

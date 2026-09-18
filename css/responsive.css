@@ -49,15 +49,6 @@
         grid-template-columns: 1fr;
         gap: 20px;
     }
-
-    .lightbox-3d-viewport {
-        height: 58vh;
-        min-height: 380px;
-    }
-
-    .lightbox-3d-card img {
-        max-height: 48vh;
-    }
 }
 
 /* Mobile Screens & Tablets (Max 768px) */
@@ -258,51 +249,11 @@
         height: 48px;
     }
 
-    /* 3D Viewer Mobile Layout */
-    .lightbox-modal {
-        padding: 12px 14px 18px;
-    }
-
-    .modal-piece-title-pill {
-        font-size: 0.82rem;
-        max-width: 75%;
-        padding: 6px 12px;
-    }
-
-    .lightbox-3d-viewport {
-        height: 50vh;
-        min-height: 320px;
-    }
-
-    .lightbox-3d-card img {
-        max-height: 42vh;
-    }
-
-    .lightbox-3d-toolbar {
-        top: 8px;
-        padding: 4px 8px;
-        gap: 4px;
-    }
-
-    .btn-3d-tool {
-        height: 30px;
-        font-size: 0.72rem;
-        padding: 0 8px;
-    }
-
-    .btn-3d-icon-only {
-        width: 30px;
-    }
-
-    .lightbox-bottom-actions {
-        flex-direction: column;
-        width: 100%;
-        gap: 10px;
-    }
-
-    .btn-modal-inquire-direct,
-    .btn-modal-call-direct {
-        width: 100%;
+    .lightbox-close-btn {
+        top: 16px;
+        right: 16px;
+        width: 40px;
+        height: 40px;
     }
 }
 
