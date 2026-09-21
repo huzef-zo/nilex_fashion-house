@@ -1,1 +1,1 @@
-window.NILEX_COVER_PANTS = null;
+window.NILEX_COVER_PANTS = "collections/pants/cover/placeholder.jpg";
