@@ -67,10 +67,12 @@
         }),
         Object.assign({}, window.NILEX_COLLECTION_PANTS, {
             coverImage: window.NILEX_COVER_PANTS || FALLBACK_COVER,
+            products: window.NILEX_GENERATED_PRODUCTS_PANTS || [],
             subcollections: []
         }),
         Object.assign({}, window.NILEX_COLLECTION_JACKETS, {
             coverImage: window.NILEX_COVER_JACKETS || FALLBACK_COVER,
+            products: window.NILEX_GENERATED_PRODUCTS_JACKETS || [],
             subcollections: []
         }),
         Object.assign({}, window.NILEX_COLLECTION_T_SHIRTS, {
@@ -83,12 +85,17 @@
         }),
         Object.assign({}, window.NILEX_COLLECTION_SWEATERS, {
             coverImage: window.NILEX_COVER_SWEATERS || FALLBACK_COVER,
+            products: window.NILEX_GENERATED_PRODUCTS_SWEATERS || [],
             subcollections: []
         })
     ];
 
     function getCollectionProductCount(collection) {
-        if (!collection || !collection.subcollections) return 0;
+        if (!collection) return 0;
+        if (collection.products && collection.products.length > 0) {
+            return collection.products.length;
+        }
+        if (!collection.subcollections) return 0;
         return collection.subcollections.reduce(function (acc, sub) {
             return acc + (sub && sub.products ? sub.products.length : 0);
         }, 0);

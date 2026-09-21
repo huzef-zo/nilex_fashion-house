@@ -104,7 +104,12 @@ function renderCurrentView() {
         if (appState.currentCollectionId && appState.currentSubcollectionId) {
             renderProductsView(container);
         } else if (appState.currentCollectionId) {
-            renderSubcollectionsView(container);
+            const collection = appState.allCollections.find(c => c.id === appState.currentCollectionId);
+            if (collection && (!collection.subcollections || collection.subcollections.length === 0)) {
+                renderProductsView(container);
+            } else {
+                renderSubcollectionsView(container);
+            }
         } else {
             renderCollectionsView(container);
         }
@@ -139,13 +144,16 @@ function renderCollectionsView(container) {
             getItemData: (col) => {
                 const productCount = window.getCollectionProductCount ? window.getCollectionProductCount(col) : 0;
                 const subCount = col.subcollections ? col.subcollections.length : 0;
+                const countText = subCount > 0
+                    ? `${subCount} Categories • ${productCount} Pieces`
+                    : `${productCount} Lookbook Pieces`;
                 return {
                     name: col.name,
                     tagline: col.tagline || '',
                     description: col.description || '',
                     coverImage: col.coverImage,
                     badge: col.badge || "Men's Collection",
-                    countText: `${subCount} Categories • ${productCount} Pieces`
+                    countText: countText
                 };
             },
             onSelect: (col) => {
@@ -233,28 +241,36 @@ function renderProductsView(container) {
     if (!collection) return;
 
     const subcollection = (collection.subcollections || []).find(s => s.id === appState.currentSubcollectionId);
-    if (!subcollection) return;
+
+    let eyebrowText = collection.name;
+    let titleText = subcollection ? subcollection.name : collection.name;
+    let descText = subcollection ? (subcollection.description || 'Click any piece to inspect, zoom, or inquire directly.') : (collection.description || 'Click any piece to inspect, zoom, or inquire directly.');
+    let backBtnText = subcollection ? collection.name : 'All Collections';
+
+    if (!subcollection) {
+        eyebrowText = collection.badge || "Men's Collection";
+    }
 
     // Header Banner
     const banner = document.createElement('div');
     banner.className = 'category-header-banner';
     banner.innerHTML = `
         <div class="category-banner-info">
-            <span class="section-eyebrow">${collection.name}</span>
-            <h2 class="category-banner-title">${subcollection.name}</h2>
-            <p class="category-banner-desc">${subcollection.description || 'Click any piece to inspect, zoom, or inquire directly.'}</p>
+            <span class="section-eyebrow">${eyebrowText}</span>
+            <h2 class="category-banner-title">${titleText}</h2>
+            <p class="category-banner-desc">${descText}</p>
         </div>
-        <button class="btn-back-action" id="btn-back-to-subcollections">
+        <button class="btn-back-action" id="btn-back-action">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                 <line x1="19" y1="12" x2="5" y2="12"></line>
                 <polyline points="12 19 5 12 12 5"></polyline>
             </svg>
-            <span>${collection.name}</span>
+            <span>${backBtnText}</span>
         </button>
     `;
     container.appendChild(banner);
 
-    const products = subcollection.products || [];
+    const products = subcollection ? (subcollection.products || []) : (collection.products || []);
 
     if (products.length === 0) {
         const emptyBox = document.createElement('div');
@@ -342,10 +358,15 @@ function renderProductsView(container) {
     }
 
     // Bind Back Button
-    const backBtn = banner.querySelector('#btn-back-to-subcollections');
+    const backBtn = banner.querySelector('#btn-back-action');
     if (backBtn) {
         backBtn.addEventListener('click', () => {
-            appState.currentSubcollectionId = null;
+            if (subcollection) {
+                appState.currentSubcollectionId = null;
+            } else {
+                appState.currentCollectionId = null;
+                appState.currentSubcollectionId = null;
+            }
             renderCurrentView();
         });
     }
@@ -386,14 +407,24 @@ function updateBreadcrumbs() {
             sep.textContent = '>';
             breadcrumbContainer.appendChild(sep);
 
-            const colBtn = document.createElement('button');
-            colBtn.className = `breadcrumb-btn ${!appState.currentSubcollectionId ? 'active' : ''}`;
-            colBtn.textContent = col.name;
-            colBtn.addEventListener('click', () => {
-                appState.currentSubcollectionId = null;
-                renderCurrentView();
-            });
-            breadcrumbContainer.appendChild(colBtn);
+            const hasSubcollections = col.subcollections && col.subcollections.length > 0;
+            const isColActive = !appState.currentSubcollectionId && hasSubcollections;
+
+            if (hasSubcollections) {
+                const colBtn = document.createElement('button');
+                colBtn.className = `breadcrumb-btn ${isColActive ? 'active' : ''}`;
+                colBtn.textContent = col.name;
+                colBtn.addEventListener('click', () => {
+                    appState.currentSubcollectionId = null;
+                    renderCurrentView();
+                });
+                breadcrumbContainer.appendChild(colBtn);
+            } else {
+                const colSpan = document.createElement('span');
+                colSpan.className = 'breadcrumb-btn active';
+                colSpan.textContent = col.name;
+                breadcrumbContainer.appendChild(colSpan);
+            }
         }
     }
 
