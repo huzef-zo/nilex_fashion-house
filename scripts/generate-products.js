@@ -15,7 +15,7 @@ function processCoverImage(coverDir, relativePathPrefix, varName) {
 
     if (fs.existsSync(coverDir) && fs.statSync(coverDir).isDirectory()) {
         const files = fs.readdirSync(coverDir)
-            .filter(file => IMAGE_EXTENSIONS.has(path.extname(file).toLowerCase()))
+            .filter(file => file.toLowerCase() !== '.gitkeep' && IMAGE_EXTENSIONS.has(path.extname(file).toLowerCase()))
             .sort((a, b) => a.localeCompare(b, undefined, { numeric: true, sensitivity: 'base' }));
 
         if (files.length > 0) {
@@ -82,7 +82,7 @@ function generateData() {
             if (fs.existsSync(imagesDir) && fs.statSync(imagesDir).isDirectory()) {
                 const files = fs.readdirSync(imagesDir);
                 imageFiles = files
-                    .filter(file => IMAGE_EXTENSIONS.has(path.extname(file).toLowerCase()))
+                    .filter(file => file.toLowerCase() !== '.gitkeep' && IMAGE_EXTENSIONS.has(path.extname(file).toLowerCase()))
                     .sort((a, b) => a.localeCompare(b, undefined, { numeric: true, sensitivity: 'base' }));
             }
 
