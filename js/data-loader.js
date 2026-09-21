@@ -6,43 +6,84 @@
  */
 
 (function () {
-    const hoodiesSweats = Object.assign({}, window.NILEX_SUBCOLLECTION_HOODIES_SWEATS, {
-        products: window.NILEX_GENERATED_PRODUCTS_HOODIES_SWEATS || []
+    const FALLBACK_COVER = 'assets/images/logo.jpg';
+
+    // Subcollections
+    // Shoes subcollections
+    const nike = Object.assign({}, window.NILEX_SUBCOLLECTION_NIKE, {
+        coverImage: window.NILEX_COVER_NIKE || FALLBACK_COVER,
+        products: window.NILEX_GENERATED_PRODUCTS_NIKE || []
     });
-    const teesTops = Object.assign({}, window.NILEX_SUBCOLLECTION_TEES_TOPS, {
-        products: window.NILEX_GENERATED_PRODUCTS_TEES_TOPS || []
+    const jordan = Object.assign({}, window.NILEX_SUBCOLLECTION_JORDAN, {
+        coverImage: window.NILEX_COVER_JORDAN || FALLBACK_COVER,
+        products: window.NILEX_GENERATED_PRODUCTS_JORDAN || []
     });
-    const cargoPants = Object.assign({}, window.NILEX_SUBCOLLECTION_CARGO_PANTS, {
-        products: window.NILEX_GENERATED_PRODUCTS_CARGO_PANTS || []
+    const leather = Object.assign({}, window.NILEX_SUBCOLLECTION_LEATHER, {
+        coverImage: window.NILEX_COVER_LEATHER || FALLBACK_COVER,
+        products: window.NILEX_GENERATED_PRODUCTS_LEATHER || []
+    });
+    const birkenstocks = Object.assign({}, window.NILEX_SUBCOLLECTION_BIRKENSTOCKS, {
+        coverImage: window.NILEX_COVER_BIRKENSTOCKS || FALLBACK_COVER,
+        products: window.NILEX_GENERATED_PRODUCTS_BIRKENSTOCKS || []
+    });
+    const chelseaBoots = Object.assign({}, window.NILEX_SUBCOLLECTION_CHELSEA_BOOTS, {
+        coverImage: window.NILEX_COVER_CHELSEA_BOOTS || FALLBACK_COVER,
+        products: window.NILEX_GENERATED_PRODUCTS_CHELSEA_BOOTS || []
     });
 
-    const linenShirts = Object.assign({}, window.NILEX_SUBCOLLECTION_LINEN_SHIRTS, {
-        products: window.NILEX_GENERATED_PRODUCTS_LINEN_SHIRTS || []
+    // T-Shirts subcollections
+    const oldMoney = Object.assign({}, window.NILEX_SUBCOLLECTION_OLD_MONEY, {
+        coverImage: window.NILEX_COVER_OLD_MONEY || FALLBACK_COVER,
+        products: window.NILEX_GENERATED_PRODUCTS_OLD_MONEY || []
     });
-    const linenCoords = Object.assign({}, window.NILEX_SUBCOLLECTION_LINEN_COORDS, {
-        products: window.NILEX_GENERATED_PRODUCTS_LINEN_COORDS || []
+    const zipUp = Object.assign({}, window.NILEX_SUBCOLLECTION_ZIP_UP, {
+        coverImage: window.NILEX_COVER_ZIP_UP || FALLBACK_COVER,
+        products: window.NILEX_GENERATED_PRODUCTS_ZIP_UP || []
+    });
+    const oShape = Object.assign({}, window.NILEX_SUBCOLLECTION_O_SHAPE, {
+        coverImage: window.NILEX_COVER_O_SHAPE || FALLBACK_COVER,
+        products: window.NILEX_GENERATED_PRODUCTS_O_SHAPE || []
+    });
+    const collar = Object.assign({}, window.NILEX_SUBCOLLECTION_COLLAR, {
+        coverImage: window.NILEX_COVER_COLLAR || FALLBACK_COVER,
+        products: window.NILEX_GENERATED_PRODUCTS_COLLAR || []
     });
 
-    const bombersJackets = Object.assign({}, window.NILEX_SUBCOLLECTION_BOMBERS_JACKETS, {
-        products: window.NILEX_GENERATED_PRODUCTS_BOMBERS_JACKETS || []
+    // Shirts subcollections
+    const sleeve = Object.assign({}, window.NILEX_SUBCOLLECTION_SLEEVE, {
+        coverImage: window.NILEX_COVER_SLEEVE || FALLBACK_COVER,
+        products: window.NILEX_GENERATED_PRODUCTS_SLEEVE || []
+    });
+    const noSleeve = Object.assign({}, window.NILEX_SUBCOLLECTION_NO_SLEEVE, {
+        coverImage: window.NILEX_COVER_NO_SLEEVE || FALLBACK_COVER,
+        products: window.NILEX_GENERATED_PRODUCTS_NO_SLEEVE || []
     });
 
-    const leatherBags = Object.assign({}, window.NILEX_SUBCOLLECTION_LEATHER_BAGS, {
-        products: window.NILEX_GENERATED_PRODUCTS_LEATHER_BAGS || []
-    });
-
+    // Collections
     const collections = [
-        Object.assign({}, window.NILEX_COLLECTION_URBAN_STREETWEAR, {
-            subcollections: [hoodiesSweats, teesTops, cargoPants]
+        Object.assign({}, window.NILEX_COLLECTION_SHOES, {
+            coverImage: window.NILEX_COVER_SHOES || FALLBACK_COVER,
+            subcollections: [nike, jordan, leather, birkenstocks, chelseaBoots]
         }),
-        Object.assign({}, window.NILEX_COLLECTION_FLOWING_LINENS, {
-            subcollections: [linenShirts, linenCoords]
+        Object.assign({}, window.NILEX_COLLECTION_PANTS, {
+            coverImage: window.NILEX_COVER_PANTS || FALLBACK_COVER,
+            subcollections: []
         }),
-        Object.assign({}, window.NILEX_COLLECTION_CASUAL_JACKETS, {
-            subcollections: [bombersJackets]
+        Object.assign({}, window.NILEX_COLLECTION_JACKETS, {
+            coverImage: window.NILEX_COVER_JACKETS || FALLBACK_COVER,
+            subcollections: []
         }),
-        Object.assign({}, window.NILEX_COLLECTION_MENS_ACCESSORIES, {
-            subcollections: [leatherBags]
+        Object.assign({}, window.NILEX_COLLECTION_T_SHIRTS, {
+            coverImage: window.NILEX_COVER_T_SHIRTS || FALLBACK_COVER,
+            subcollections: [oldMoney, zipUp, oShape, collar]
+        }),
+        Object.assign({}, window.NILEX_COLLECTION_SHIRTS, {
+            coverImage: window.NILEX_COVER_SHIRTS || FALLBACK_COVER,
+            subcollections: [sleeve, noSleeve]
+        }),
+        Object.assign({}, window.NILEX_COLLECTION_SWEATERS, {
+            coverImage: window.NILEX_COVER_SWEATERS || FALLBACK_COVER,
+            subcollections: []
         })
     ];
 

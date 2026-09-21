@@ -5,7 +5,34 @@ const ROOT_DIR = path.resolve(__dirname, '..');
 const COLLECTIONS_DIR = path.join(ROOT_DIR, 'collections');
 const IMAGE_EXTENSIONS = new Set(['.jpg', '.jpeg', '.png', '.webp']);
 
-function generateProducts() {
+function helperToVarName(idStr, prefix = '') {
+    const clean = idStr.replace(/-/g, '_').toUpperCase();
+    return prefix ? `${prefix}_${clean}` : clean;
+}
+
+function processCoverImage(coverDir, relativePathPrefix, varName) {
+    let chosenCoverPath = null;
+
+    if (fs.existsSync(coverDir) && fs.statSync(coverDir).isDirectory()) {
+        const files = fs.readdirSync(coverDir)
+            .filter(file => IMAGE_EXTENSIONS.has(path.extname(file).toLowerCase()))
+            .sort((a, b) => a.localeCompare(b, undefined, { numeric: true, sensitivity: 'base' }));
+
+        if (files.length > 0) {
+            chosenCoverPath = `${relativePathPrefix}/${files[0]}`;
+            if (files.length > 1) {
+                console.warn(`[WARNING] Multiple cover images found in ${coverDir}. Using "${files[0]}" and ignoring: ${files.slice(1).join(', ')}`);
+            }
+        }
+    }
+
+    const coverJsContent = `window.${varName} = ${JSON.stringify(chosenCoverPath)};\n`;
+    const coverJsPath = path.join(path.dirname(coverDir), 'cover.generated.js');
+    fs.writeFileSync(coverJsPath, coverJsContent, 'utf8');
+    console.log(`Generated ${coverJsPath} (${varName} = ${chosenCoverPath ? `"${chosenCoverPath}"` : 'null'})`);
+}
+
+function generateData() {
     if (!fs.existsSync(COLLECTIONS_DIR)) {
         console.log('No collections directory found.');
         return;
@@ -17,6 +44,12 @@ function generateProducts() {
         const collectionPath = path.join(COLLECTIONS_DIR, collectionDir);
         if (!fs.statSync(collectionPath).isDirectory()) continue;
 
+        // Process Collection Cover
+        const colCoverDir = path.join(collectionPath, 'cover');
+        const colVarName = `NILEX_COVER_${helperToVarName(collectionDir)}`;
+        processCoverImage(colCoverDir, `collections/${collectionDir}/cover`, colVarName);
+
+        // Process Subcollections if any
         const subcollectionsDir = path.join(collectionPath, 'subcollections');
         if (!fs.existsSync(subcollectionsDir) || !fs.statSync(subcollectionsDir).isDirectory()) continue;
 
@@ -26,6 +59,12 @@ function generateProducts() {
             const subPath = path.join(subcollectionsDir, subDir);
             if (!fs.statSync(subPath).isDirectory()) continue;
 
+            // Process Subcollection Cover
+            const subCoverDir = path.join(subPath, 'cover');
+            const subCoverVarName = `NILEX_COVER_${helperToVarName(subDir)}`;
+            processCoverImage(subCoverDir, `collections/${collectionDir}/subcollections/${subDir}/cover`, subCoverVarName);
+
+            // Process Subcollection Products
             const dataFilePath = path.join(subPath, 'data.js');
             let prefix = 'XX';
 
@@ -42,7 +81,6 @@ function generateProducts() {
 
             if (fs.existsSync(imagesDir) && fs.statSync(imagesDir).isDirectory()) {
                 const files = fs.readdirSync(imagesDir);
-                // Note: Zo can prefix filenames like 01-..., 02-... if he wants to control the order.
                 imageFiles = files
                     .filter(file => IMAGE_EXTENSIONS.has(path.extname(file).toLowerCase()))
                     .sort((a, b) => a.localeCompare(b, undefined, { numeric: true, sensitivity: 'base' }));
@@ -62,9 +100,9 @@ function generateProducts() {
                 };
             });
 
-            const varName = `NILEX_GENERATED_PRODUCTS_${subDir.replace(/-/g, '_').toUpperCase()}`;
+            const prodVarName = `NILEX_GENERATED_PRODUCTS_${helperToVarName(subDir)}`;
             const generatedJsPath = path.join(subPath, 'products.generated.js');
-            const jsContent = `window.${varName} = ${JSON.stringify(products, null, 4)};\n`;
+            const jsContent = `window.${prodVarName} = ${JSON.stringify(products, null, 4)};\n`;
 
             fs.writeFileSync(generatedJsPath, jsContent, 'utf8');
             console.log(`Generated ${generatedJsPath} with ${products.length} products (prefix: ${prefix}).`);
@@ -72,4 +110,4 @@ function generateProducts() {
     }
 }
 
-generateProducts();
+generateData();

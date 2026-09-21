@@ -1,0 +1,1 @@
+window.NILEX_COVER_CHELSEA_BOOTS = null;
