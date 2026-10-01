@@ -53,6 +53,11 @@ class CardStack {
         this.wrapper = document.createElement('div');
         this.wrapper.className = `card-stack-wrapper ${this.cardShape}-stack`;
 
+        // Full-width hit-box for desktop hover scrubbing
+        this.hitbox = document.createElement('div');
+        this.hitbox.className = 'card-stack-hitbox';
+        this.wrapper.appendChild(this.hitbox);
+
         // Stage for overlapping cards
         this.stage = document.createElement('div');
         this.stage.className = 'card-stack-stage';
@@ -221,7 +226,8 @@ class CardStack {
             if (e.pointerType === 'touch') return;
             if (this.items.length <= 1) return;
 
-            const rect = this.wrapper.getBoundingClientRect();
+            const targetBox = this.hitbox || this.wrapper;
+            const rect = targetBox.getBoundingClientRect();
             if (!rect.width) return;
 
             const mouseXFraction = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
@@ -349,6 +355,10 @@ class CardStack {
             const effectiveOffset = offset + dragOffset;
             const absOffset = Math.abs(effectiveOffset);
 
+            // Stacking order (z-index) based strictly on discrete distance from current front card
+            const discreteDist = Math.abs(offset);
+            const zIndex = Math.max(1, 100 - discreteDist * 10);
+
             // Is card visible within maxSide range
             if (absOffset > maxSide + 0.8) {
                 card.style.opacity = '0';
@@ -359,9 +369,6 @@ class CardStack {
             }
 
             card.style.pointerEvents = absOffset < 0.3 ? 'auto' : 'none';
-
-            // Z-Index: Front card gets highest z-index
-            const zIndex = 100 - Math.round(absOffset * 10);
             card.style.zIndex = zIndex;
 
             // Compute transforms
@@ -378,7 +385,7 @@ class CardStack {
             if (isDraggingLive) {
                 card.style.transition = 'none';
             } else {
-                card.style.transition = 'transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.45s ease, box-shadow 0.45s ease';
+                card.style.transition = 'transform var(--transition-normal), opacity var(--transition-normal), box-shadow var(--transition-normal)';
             }
 
             // Toggle active class on front card
