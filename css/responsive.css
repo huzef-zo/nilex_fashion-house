@@ -114,6 +114,27 @@
         justify-content: center;
     }
 
+    .hero-quick-badges {
+        display: flex;
+        overflow-x: auto;
+        gap: 12px;
+        scroll-snap-type: x mandatory;
+        max-width: 100%;
+        scrollbar-width: none;
+        -webkit-overflow-scrolling: touch;
+        padding-bottom: 4px;
+    }
+
+    .hero-quick-badges::-webkit-scrollbar {
+        display: none;
+    }
+
+    .info-pill {
+        min-width: 240px;
+        flex-shrink: 0;
+        scroll-snap-align: center;
+    }
+
     .showcase-nav-bar {
         flex-direction: column;
         align-items: stretch;
@@ -198,6 +219,28 @@
     .btn-open-maps, .btn-call-boutique {
         width: 100%;
         justify-content: center;
+    }
+
+    .guide-steps-grid {
+        display: flex;
+        overflow-x: auto;
+        gap: 16px;
+        scroll-snap-type: x mandatory;
+        max-width: 100%;
+        scrollbar-width: none;
+        -webkit-overflow-scrolling: touch;
+        padding-bottom: 4px;
+    }
+
+    .guide-steps-grid::-webkit-scrollbar {
+        display: none;
+    }
+
+    .guide-step-card {
+        min-width: 260px;
+        flex-shrink: 0;
+        scroll-snap-align: center;
+        padding: 24px 20px;
     }
 
     .community-grid {
