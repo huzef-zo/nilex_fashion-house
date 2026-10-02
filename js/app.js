@@ -303,7 +303,7 @@ function renderProductsView(container) {
                 const codeStr = escapeHtml(prod.code || prod.id || '');
                 return `
                     <div class="stack-card-inner">
-                        <img class="stack-card-image" src="${prod.coverImage}" alt="${codeStr}" loading="lazy" onerror="this.src='assets/images/logo.jpg'">
+                        <img class="stack-card-image" src="${prod.coverImage}" alt="${codeStr ? codeStr + ' — NILEX menswear' : 'NILEX menswear'}" loading="lazy" onerror="this.src='assets/images/logo.jpg'">
                         <div class="stack-card-overlay"></div>
                         ${badgeHtml ? `<div class="stack-card-top-bar">${badgeHtml}</div>` : ''}
                         <div class="product-stack-content">
