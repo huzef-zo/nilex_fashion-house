@@ -119,6 +119,7 @@
         overflow-x: auto;
         gap: 12px;
         scroll-snap-type: x mandatory;
+        width: 100%;
         max-width: 100%;
         scrollbar-width: none;
         -webkit-overflow-scrolling: touch;
@@ -226,6 +227,7 @@
         overflow-x: auto;
         gap: 16px;
         scroll-snap-type: x mandatory;
+        width: 100%;
         max-width: 100%;
         scrollbar-width: none;
         -webkit-overflow-scrolling: touch;
@@ -243,12 +245,28 @@
         padding: 24px 20px;
     }
 
-    .community-grid {
-        grid-template-columns: 1fr;
+    .community-scroll-row {
+        display: flex;
+        overflow-x: auto;
+        gap: 16px;
+        scroll-snap-type: x mandatory;
+        width: 100%;
+        max-width: 100%;
+        scrollbar-width: none;
+        -webkit-overflow-scrolling: touch;
+        padding-bottom: 4px;
     }
 
-    .tiktok-card,
-    .telegram-channel-card {
+    .community-scroll-row::-webkit-scrollbar {
+        display: none;
+    }
+
+    .community-scroll-row .tiktok-card,
+    .community-scroll-row .telegram-channel-card {
+        scroll-snap-align: center;
+        flex-shrink: 0;
+        min-width: 88vw;
+        max-width: 88vw;
         padding: 30px 20px;
         text-align: center;
         align-items: center;
