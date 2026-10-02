@@ -87,6 +87,7 @@ body {
     position: relative;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
 }
 
 /* Water Particle Canvas Background */
@@ -1746,7 +1747,7 @@ img {
     z-index: 2;
 }
 
-.community-grid {
+.community-scroll-row {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 30px;
