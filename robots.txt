@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://nilex-fashion-house.vercel.app/sitemap.xml

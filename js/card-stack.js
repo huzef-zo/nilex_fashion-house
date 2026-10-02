@@ -74,7 +74,7 @@ class CardStack {
             } else {
                 card.innerHTML = `
                     <div class="stack-card-inner">
-                        <img class="stack-card-image" src="${data.coverImage}" alt="${data.name}" loading="lazy" onerror="this.src='assets/images/logo.jpg'">
+                        <img class="stack-card-image" src="${data.coverImage}" alt="${data.name || 'NILEX menswear'}" loading="lazy" onerror="this.src='assets/images/logo.jpg'">
                         <div class="stack-card-overlay"></div>
                         <div class="stack-card-top-bar">
                             ${data.badge ? `<span class="stack-card-badge" title="${data.badge}">${data.badge}</span>` : '<span></span>'}
