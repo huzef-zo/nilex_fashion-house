@@ -117,6 +117,7 @@
     .hero-quick-badges {
         display: flex;
         overflow-x: auto;
+        overscroll-behavior-x: contain;
         gap: 12px;
         scroll-snap-type: x mandatory;
         width: 100%;
@@ -225,6 +226,7 @@
     .guide-steps-grid {
         display: flex;
         overflow-x: auto;
+        overscroll-behavior-x: contain;
         gap: 16px;
         scroll-snap-type: x mandatory;
         width: 100%;
@@ -248,6 +250,7 @@
     .community-scroll-row {
         display: flex;
         overflow-x: auto;
+        overscroll-behavior-x: contain;
         gap: 16px;
         scroll-snap-type: x mandatory;
         width: 100%;
