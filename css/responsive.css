@@ -13,11 +13,6 @@
         padding: 0 20px;
     }
 
-    .hero-quick-badges {
-        grid-template-columns: 1fr;
-        max-width: 500px;
-    }
-
     .philosophy-grid {
         grid-template-columns: 1fr;
         gap: 40px;
@@ -101,45 +96,6 @@
 
     .hero-subtitle {
         font-size: 1.3rem;
-    }
-
-    .hero-actions {
-        flex-direction: column;
-        width: 100%;
-    }
-
-    .hero-actions .btn-primary,
-    .hero-actions .btn-secondary {
-        width: 100%;
-        justify-content: center;
-    }
-
-    .hero-quick-badges {
-        grid-template-columns: 1fr;
-        gap: 10px;
-    }
-
-    .info-pill {
-        padding: 10px 16px;
-        gap: 10px;
-    }
-
-    .info-pill-icon {
-        width: 32px;
-        height: 32px;
-    }
-
-    .info-pill-icon svg {
-        width: 16px;
-        height: 16px;
-    }
-
-    .info-pill-label {
-        font-size: 0.65rem;
-    }
-
-    .info-pill-value {
-        font-size: 0.8rem;
     }
 
     .showcase-nav-bar {
