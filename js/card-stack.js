@@ -53,11 +53,6 @@ class CardStack {
         this.wrapper = document.createElement('div');
         this.wrapper.className = `card-stack-wrapper ${this.cardShape}-stack`;
 
-        // Full-width hit-box for desktop hover scrubbing
-        this.hitbox = document.createElement('div');
-        this.hitbox.className = 'card-stack-hitbox';
-        this.wrapper.appendChild(this.hitbox);
-
         // Stage for overlapping cards
         this.stage = document.createElement('div');
         this.stage.className = 'card-stack-stage';
@@ -221,24 +216,31 @@ class CardStack {
         this.stage.addEventListener('touchend', onTouchEnd);
         this.stage.addEventListener('touchcancel', onTouchEnd);
 
-        // Continuous Hover-Scrub for Desktop (mouse / fine pointer)
-        const onHoverScrub = (e) => {
-            if (e.pointerType === 'touch') return;
-            if (this.items.length <= 1) return;
-
-            const targetBox = this.hitbox || this.wrapper;
-            const rect = targetBox.getBoundingClientRect();
-            if (!rect.width) return;
-
-            const mouseXFraction = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
-            const scrubIndex = Math.round(mouseXFraction * (this.items.length - 1));
-
-            if (scrubIndex !== this.currentIndex && scrubIndex >= 0 && scrubIndex < this.items.length) {
-                this.goTo(scrubIndex);
+        // Direct per-card hover targeting for Desktop (mouse / fine pointer)
+        const handleCardHover = (cardIndex, e) => {
+            if (e && e.pointerType === 'touch') return;
+            if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+            if (cardIndex !== this.currentIndex && cardIndex >= 0 && cardIndex < this.items.length) {
+                this.goTo(cardIndex);
             }
         };
 
-        this.wrapper.addEventListener('pointermove', onHoverScrub);
+        // Attach pointerenter listeners to individual cards
+        this.cards.forEach((card, idx) => {
+            card.addEventListener('pointerenter', (e) => handleCardHover(idx, e));
+        });
+
+        // Delegate pointerover on the parent stage so newly-peeking cards are hoverable immediately
+        this.stage.addEventListener('pointerover', (e) => {
+            if (e.pointerType === 'touch') return;
+            if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+            const targetCard = e.target.closest('.card-stack-card');
+            if (!targetCard || !this.stage.contains(targetCard)) return;
+            const cardIndex = parseInt(targetCard.dataset.index, 10);
+            if (!isNaN(cardIndex)) {
+                handleCardHover(cardIndex, e);
+            }
+        });
 
         // Click handling: clicking the front card triggers navigation
         this.cards.forEach((card, idx) => {
@@ -368,7 +370,7 @@ class CardStack {
                 return;
             }
 
-            card.style.pointerEvents = absOffset < 0.3 ? 'auto' : 'none';
+            card.style.pointerEvents = 'auto';
             card.style.zIndex = zIndex;
 
             // Compute transforms
