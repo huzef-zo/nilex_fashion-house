@@ -6,37 +6,23 @@
  */
 
 document.addEventListener('DOMContentLoaded', () => {
-    let causticsActive = false;
-    if (typeof window.initWaterCaustics === 'function') {
-        causticsActive = window.initWaterCaustics();
-    }
-    if (!causticsActive) {
-        initRiverCanvas();
-    }
+    initRiverCanvas();
     initScrollReveals();
     initHeaderScroll();
     initScrollTopButton();
 });
 
-let isRiverCanvasRunning = false;
-
 /**
- * Nile River Flowing Water Particles Canvas (2D Fallback)
+ * Nile River Flowing Water Particles Canvas
  */
 function initRiverCanvas() {
-    if (isRiverCanvasRunning) return;
-
     const canvas = document.getElementById('river-canvas');
     if (!canvas) return;
-
-    canvas.style.display = 'block';
 
     // Respect reduced-motion setting
     if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
         return;
     }
-
-    isRiverCanvasRunning = true;
 
     const ctx = canvas.getContext('2d');
     let width = (canvas.width = window.innerWidth);
