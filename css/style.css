@@ -89,7 +89,8 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
-/* Water Canvas Background (2D River Canvas) */
+/* Water Canvas Backgrounds (WebGL Caustics & 2D Fallback River Canvas) */
+#water-canvas,
 #river-canvas {
     position: fixed;
     top: 0;
@@ -98,8 +99,15 @@ body {
     height: 100%;
     pointer-events: none;
     z-index: 0;
+}
+
+#water-canvas {
     display: block;
-    opacity: 0.85;
+}
+
+#river-canvas {
+    display: none;
+    opacity: 0.65;
 }
 
 a {
